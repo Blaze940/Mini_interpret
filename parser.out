@@ -1,9 +1,5 @@
 Created by PLY version 3.10 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    SAME
-
 Grammar
 
 Rule 0     S' -> START
@@ -11,48 +7,53 @@ Rule 1     START -> BLOC
 Rule 2     BLOC -> BLOC statement SEMICOLON
 Rule 3     BLOC -> statement SEMICOLON
 Rule 4     statement -> PRINT LPAREN expression RPAREN
-Rule 5     statement -> NAME AFFECT expression
-Rule 6     expression -> expression PLUS expression
-Rule 7     expression -> expression TIMES expression
-Rule 8     expression -> expression MINUS expression
-Rule 9     expression -> expression DIVIDE expression
-Rule 10    expression -> LPAREN expression RPAREN
-Rule 11    expression -> NUMBER
-Rule 12    expression -> NAME
-Rule 13    expression -> TRUE
-Rule 14    expression -> FALSE
-Rule 15    expression -> expression AND expression
-Rule 16    expression -> expression OR expression
-Rule 17    expression -> expression INFTO expression
-Rule 18    expression -> expression SUPTO expression
+Rule 5     statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL
+Rule 6     statement -> NAME AFFECT expression
+Rule 7     expression -> expression PLUS expression
+Rule 8     expression -> expression TIMES expression
+Rule 9     expression -> expression SAME expression
+Rule 10    expression -> expression MINUS expression
+Rule 11    expression -> expression DIVIDE expression
+Rule 12    expression -> LPAREN expression RPAREN
+Rule 13    expression -> NUMBER
+Rule 14    expression -> NAME
+Rule 15    expression -> TRUE
+Rule 16    expression -> FALSE
+Rule 17    expression -> expression AND expression
+Rule 18    expression -> expression OR expression
+Rule 19    expression -> expression INFTO expression
+Rule 20    expression -> expression SUPTO expression
 
 Terminals, with rules where they appear
 
-AFFECT               : 5
-AND                  : 15
-DIVIDE               : 9
-FALSE                : 14
-INFTO                : 17
-LPAREN               : 4 10
-MINUS                : 8
-NAME                 : 5 12
-NUMBER               : 11
-OR                   : 16
-PLUS                 : 6
+AFFECT               : 6
+AND                  : 17
+DIVIDE               : 11
+FALSE                : 16
+IF                   : 5
+INFTO                : 19
+LACOL                : 5
+LPAREN               : 4 5 12
+MINUS                : 10
+NAME                 : 6 14
+NUMBER               : 13
+OR                   : 18
+PLUS                 : 7
 PRINT                : 4
-RPAREN               : 4 10
-SAME                 : 
+RACOL                : 5
+RPAREN               : 4 5 12
+SAME                 : 9
 SEMICOLON            : 2 3
-SUPTO                : 18
-TIMES                : 7
-TRUE                 : 13
+SUPTO                : 20
+TIMES                : 8
+TRUE                 : 15
 error                : 
 
 Nonterminals, with rules where they appear
 
-BLOC                 : 1 2
+BLOC                 : 1 2 5
 START                : 0
-expression           : 4 5 6 6 7 7 8 8 9 9 10 15 15 16 16 17 17 18 18
+expression           : 4 5 6 7 7 8 8 9 9 10 10 11 11 12 17 17 18 18 19 19 20 20
 statement            : 2 3
 
 Parsing method: LALR
@@ -64,10 +65,12 @@ state 0
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . NAME AFFECT expression
+    (5) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (6) statement -> . NAME AFFECT expression
 
     PRINT           shift and go to state 4
-    NAME            shift and go to state 5
+    IF              shift and go to state 5
+    NAME            shift and go to state 6
 
     START                          shift and go to state 1
     BLOC                           shift and go to state 2
@@ -84,751 +87,989 @@ state 2
     (1) START -> BLOC .
     (2) BLOC -> BLOC . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . NAME AFFECT expression
+    (5) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (6) statement -> . NAME AFFECT expression
 
     $end            reduce using rule 1 (START -> BLOC .)
     PRINT           shift and go to state 4
-    NAME            shift and go to state 5
+    IF              shift and go to state 5
+    NAME            shift and go to state 6
 
-    statement                      shift and go to state 6
+    statement                      shift and go to state 7
 
 state 3
 
     (3) BLOC -> statement . SEMICOLON
 
-    SEMICOLON       shift and go to state 7
+    SEMICOLON       shift and go to state 8
 
 
 state 4
 
     (4) statement -> PRINT . LPAREN expression RPAREN
 
-    LPAREN          shift and go to state 8
+    LPAREN          shift and go to state 9
 
 
 state 5
 
-    (5) statement -> NAME . AFFECT expression
+    (5) statement -> IF . LPAREN expression RPAREN LACOL BLOC RACOL
 
-    AFFECT          shift and go to state 9
+    LPAREN          shift and go to state 10
 
 
 state 6
 
-    (2) BLOC -> BLOC statement . SEMICOLON
+    (6) statement -> NAME . AFFECT expression
 
-    SEMICOLON       shift and go to state 10
+    AFFECT          shift and go to state 11
 
 
 state 7
 
-    (3) BLOC -> statement SEMICOLON .
+    (2) BLOC -> BLOC statement . SEMICOLON
 
-    PRINT           reduce using rule 3 (BLOC -> statement SEMICOLON .)
-    NAME            reduce using rule 3 (BLOC -> statement SEMICOLON .)
-    $end            reduce using rule 3 (BLOC -> statement SEMICOLON .)
+    SEMICOLON       shift and go to state 12
 
 
 state 8
 
-    (4) statement -> PRINT LPAREN . expression RPAREN
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
+    (3) BLOC -> statement SEMICOLON .
 
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
+    PRINT           reduce using rule 3 (BLOC -> statement SEMICOLON .)
+    IF              reduce using rule 3 (BLOC -> statement SEMICOLON .)
+    NAME            reduce using rule 3 (BLOC -> statement SEMICOLON .)
+    $end            reduce using rule 3 (BLOC -> statement SEMICOLON .)
+    RACOL           reduce using rule 3 (BLOC -> statement SEMICOLON .)
 
-    expression                     shift and go to state 12
 
 state 9
 
-    (5) statement -> NAME AFFECT . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
+    (4) statement -> PRINT LPAREN . expression RPAREN
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
-    expression                     shift and go to state 17
+    expression                     shift and go to state 14
 
 state 10
+
+    (5) statement -> IF LPAREN . expression RPAREN LACOL BLOC RACOL
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
+
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
+
+    expression                     shift and go to state 19
+
+state 11
+
+    (6) statement -> NAME AFFECT . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
+
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
+
+    expression                     shift and go to state 20
+
+state 12
 
     (2) BLOC -> BLOC statement SEMICOLON .
 
     PRINT           reduce using rule 2 (BLOC -> BLOC statement SEMICOLON .)
+    IF              reduce using rule 2 (BLOC -> BLOC statement SEMICOLON .)
     NAME            reduce using rule 2 (BLOC -> BLOC statement SEMICOLON .)
     $end            reduce using rule 2 (BLOC -> BLOC statement SEMICOLON .)
-
-
-state 11
-
-    (10) expression -> LPAREN . expression RPAREN
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
-
-    expression                     shift and go to state 18
-
-state 12
-
-    (4) statement -> PRINT LPAREN expression . RPAREN
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
-
-    RPAREN          shift and go to state 19
-    PLUS            shift and go to state 20
-    TIMES           shift and go to state 21
-    MINUS           shift and go to state 22
-    DIVIDE          shift and go to state 23
-    AND             shift and go to state 24
-    OR              shift and go to state 25
-    INFTO           shift and go to state 26
-    SUPTO           shift and go to state 27
+    RACOL           reduce using rule 2 (BLOC -> BLOC statement SEMICOLON .)
 
 
 state 13
 
-    (11) expression -> NUMBER .
+    (12) expression -> LPAREN . expression RPAREN
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    RPAREN          reduce using rule 11 (expression -> NUMBER .)
-    PLUS            reduce using rule 11 (expression -> NUMBER .)
-    TIMES           reduce using rule 11 (expression -> NUMBER .)
-    MINUS           reduce using rule 11 (expression -> NUMBER .)
-    DIVIDE          reduce using rule 11 (expression -> NUMBER .)
-    AND             reduce using rule 11 (expression -> NUMBER .)
-    OR              reduce using rule 11 (expression -> NUMBER .)
-    INFTO           reduce using rule 11 (expression -> NUMBER .)
-    SUPTO           reduce using rule 11 (expression -> NUMBER .)
-    SEMICOLON       reduce using rule 11 (expression -> NUMBER .)
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
+    expression                     shift and go to state 21
 
 state 14
 
-    (12) expression -> NAME .
+    (4) statement -> PRINT LPAREN expression . RPAREN
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
 
-    RPAREN          reduce using rule 12 (expression -> NAME .)
-    PLUS            reduce using rule 12 (expression -> NAME .)
-    TIMES           reduce using rule 12 (expression -> NAME .)
-    MINUS           reduce using rule 12 (expression -> NAME .)
-    DIVIDE          reduce using rule 12 (expression -> NAME .)
-    AND             reduce using rule 12 (expression -> NAME .)
-    OR              reduce using rule 12 (expression -> NAME .)
-    INFTO           reduce using rule 12 (expression -> NAME .)
-    SUPTO           reduce using rule 12 (expression -> NAME .)
-    SEMICOLON       reduce using rule 12 (expression -> NAME .)
+    RPAREN          shift and go to state 22
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    SAME            shift and go to state 25
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+    INFTO           shift and go to state 30
+    SUPTO           shift and go to state 31
 
 
 state 15
 
-    (13) expression -> TRUE .
+    (13) expression -> NUMBER .
 
-    RPAREN          reduce using rule 13 (expression -> TRUE .)
-    PLUS            reduce using rule 13 (expression -> TRUE .)
-    TIMES           reduce using rule 13 (expression -> TRUE .)
-    MINUS           reduce using rule 13 (expression -> TRUE .)
-    DIVIDE          reduce using rule 13 (expression -> TRUE .)
-    AND             reduce using rule 13 (expression -> TRUE .)
-    OR              reduce using rule 13 (expression -> TRUE .)
-    INFTO           reduce using rule 13 (expression -> TRUE .)
-    SUPTO           reduce using rule 13 (expression -> TRUE .)
-    SEMICOLON       reduce using rule 13 (expression -> TRUE .)
+    RPAREN          reduce using rule 13 (expression -> NUMBER .)
+    PLUS            reduce using rule 13 (expression -> NUMBER .)
+    TIMES           reduce using rule 13 (expression -> NUMBER .)
+    SAME            reduce using rule 13 (expression -> NUMBER .)
+    MINUS           reduce using rule 13 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 13 (expression -> NUMBER .)
+    AND             reduce using rule 13 (expression -> NUMBER .)
+    OR              reduce using rule 13 (expression -> NUMBER .)
+    INFTO           reduce using rule 13 (expression -> NUMBER .)
+    SUPTO           reduce using rule 13 (expression -> NUMBER .)
+    SEMICOLON       reduce using rule 13 (expression -> NUMBER .)
 
 
 state 16
 
-    (14) expression -> FALSE .
+    (14) expression -> NAME .
 
-    RPAREN          reduce using rule 14 (expression -> FALSE .)
-    PLUS            reduce using rule 14 (expression -> FALSE .)
-    TIMES           reduce using rule 14 (expression -> FALSE .)
-    MINUS           reduce using rule 14 (expression -> FALSE .)
-    DIVIDE          reduce using rule 14 (expression -> FALSE .)
-    AND             reduce using rule 14 (expression -> FALSE .)
-    OR              reduce using rule 14 (expression -> FALSE .)
-    INFTO           reduce using rule 14 (expression -> FALSE .)
-    SUPTO           reduce using rule 14 (expression -> FALSE .)
-    SEMICOLON       reduce using rule 14 (expression -> FALSE .)
+    RPAREN          reduce using rule 14 (expression -> NAME .)
+    PLUS            reduce using rule 14 (expression -> NAME .)
+    TIMES           reduce using rule 14 (expression -> NAME .)
+    SAME            reduce using rule 14 (expression -> NAME .)
+    MINUS           reduce using rule 14 (expression -> NAME .)
+    DIVIDE          reduce using rule 14 (expression -> NAME .)
+    AND             reduce using rule 14 (expression -> NAME .)
+    OR              reduce using rule 14 (expression -> NAME .)
+    INFTO           reduce using rule 14 (expression -> NAME .)
+    SUPTO           reduce using rule 14 (expression -> NAME .)
+    SEMICOLON       reduce using rule 14 (expression -> NAME .)
 
 
 state 17
 
-    (5) statement -> NAME AFFECT expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (15) expression -> TRUE .
 
-    SEMICOLON       reduce using rule 5 (statement -> NAME AFFECT expression .)
-    PLUS            shift and go to state 20
-    TIMES           shift and go to state 21
-    MINUS           shift and go to state 22
-    DIVIDE          shift and go to state 23
-    AND             shift and go to state 24
-    OR              shift and go to state 25
-    INFTO           shift and go to state 26
-    SUPTO           shift and go to state 27
+    RPAREN          reduce using rule 15 (expression -> TRUE .)
+    PLUS            reduce using rule 15 (expression -> TRUE .)
+    TIMES           reduce using rule 15 (expression -> TRUE .)
+    SAME            reduce using rule 15 (expression -> TRUE .)
+    MINUS           reduce using rule 15 (expression -> TRUE .)
+    DIVIDE          reduce using rule 15 (expression -> TRUE .)
+    AND             reduce using rule 15 (expression -> TRUE .)
+    OR              reduce using rule 15 (expression -> TRUE .)
+    INFTO           reduce using rule 15 (expression -> TRUE .)
+    SUPTO           reduce using rule 15 (expression -> TRUE .)
+    SEMICOLON       reduce using rule 15 (expression -> TRUE .)
 
 
 state 18
 
-    (10) expression -> LPAREN expression . RPAREN
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (16) expression -> FALSE .
 
-    RPAREN          shift and go to state 28
-    PLUS            shift and go to state 20
-    TIMES           shift and go to state 21
-    MINUS           shift and go to state 22
-    DIVIDE          shift and go to state 23
-    AND             shift and go to state 24
-    OR              shift and go to state 25
-    INFTO           shift and go to state 26
-    SUPTO           shift and go to state 27
+    RPAREN          reduce using rule 16 (expression -> FALSE .)
+    PLUS            reduce using rule 16 (expression -> FALSE .)
+    TIMES           reduce using rule 16 (expression -> FALSE .)
+    SAME            reduce using rule 16 (expression -> FALSE .)
+    MINUS           reduce using rule 16 (expression -> FALSE .)
+    DIVIDE          reduce using rule 16 (expression -> FALSE .)
+    AND             reduce using rule 16 (expression -> FALSE .)
+    OR              reduce using rule 16 (expression -> FALSE .)
+    INFTO           reduce using rule 16 (expression -> FALSE .)
+    SUPTO           reduce using rule 16 (expression -> FALSE .)
+    SEMICOLON       reduce using rule 16 (expression -> FALSE .)
 
 
 state 19
+
+    (5) statement -> IF LPAREN expression . RPAREN LACOL BLOC RACOL
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    RPAREN          shift and go to state 32
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    SAME            shift and go to state 25
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+    INFTO           shift and go to state 30
+    SUPTO           shift and go to state 31
+
+
+state 20
+
+    (6) statement -> NAME AFFECT expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    SEMICOLON       reduce using rule 6 (statement -> NAME AFFECT expression .)
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    SAME            shift and go to state 25
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+    INFTO           shift and go to state 30
+    SUPTO           shift and go to state 31
+
+
+state 21
+
+    (12) expression -> LPAREN expression . RPAREN
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    RPAREN          shift and go to state 33
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    SAME            shift and go to state 25
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+    INFTO           shift and go to state 30
+    SUPTO           shift and go to state 31
+
+
+state 22
 
     (4) statement -> PRINT LPAREN expression RPAREN .
 
     SEMICOLON       reduce using rule 4 (statement -> PRINT LPAREN expression RPAREN .)
 
 
-state 20
-
-    (6) expression -> expression PLUS . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
-
-    expression                     shift and go to state 29
-
-state 21
-
-    (7) expression -> expression TIMES . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
-
-    expression                     shift and go to state 30
-
-state 22
-
-    (8) expression -> expression MINUS . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
-
-    expression                     shift and go to state 31
-
 state 23
 
-    (9) expression -> expression DIVIDE . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
+    (7) expression -> expression PLUS . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
-
-    expression                     shift and go to state 32
-
-state 24
-
-    (15) expression -> expression AND . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
-
-    expression                     shift and go to state 33
-
-state 25
-
-    (16) expression -> expression OR . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
     expression                     shift and go to state 34
 
-state 26
+state 24
 
-    (17) expression -> expression INFTO . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
+    (8) expression -> expression TIMES . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
     expression                     shift and go to state 35
 
-state 27
+state 25
 
-    (18) expression -> expression SUPTO . expression
-    (6) expression -> . expression PLUS expression
-    (7) expression -> . expression TIMES expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression DIVIDE expression
-    (10) expression -> . LPAREN expression RPAREN
-    (11) expression -> . NUMBER
-    (12) expression -> . NAME
-    (13) expression -> . TRUE
-    (14) expression -> . FALSE
-    (15) expression -> . expression AND expression
-    (16) expression -> . expression OR expression
-    (17) expression -> . expression INFTO expression
-    (18) expression -> . expression SUPTO expression
+    (9) expression -> expression SAME . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    LPAREN          shift and go to state 11
-    NUMBER          shift and go to state 13
-    NAME            shift and go to state 14
-    TRUE            shift and go to state 15
-    FALSE           shift and go to state 16
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
     expression                     shift and go to state 36
 
+state 26
+
+    (10) expression -> expression MINUS . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
+
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
+
+    expression                     shift and go to state 37
+
+state 27
+
+    (11) expression -> expression DIVIDE . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
+
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
+
+    expression                     shift and go to state 38
+
 state 28
 
-    (10) expression -> LPAREN expression RPAREN .
+    (17) expression -> expression AND . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    RPAREN          reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    TIMES           reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    AND             reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    OR              reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    INFTO           reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    SUPTO           reduce using rule 10 (expression -> LPAREN expression RPAREN .)
-    SEMICOLON       reduce using rule 10 (expression -> LPAREN expression RPAREN .)
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
+    expression                     shift and go to state 39
 
 state 29
 
-    (6) expression -> expression PLUS expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (18) expression -> expression OR . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    RPAREN          reduce using rule 6 (expression -> expression PLUS expression .)
-    PLUS            reduce using rule 6 (expression -> expression PLUS expression .)
-    MINUS           reduce using rule 6 (expression -> expression PLUS expression .)
-    AND             reduce using rule 6 (expression -> expression PLUS expression .)
-    OR              reduce using rule 6 (expression -> expression PLUS expression .)
-    INFTO           reduce using rule 6 (expression -> expression PLUS expression .)
-    SUPTO           reduce using rule 6 (expression -> expression PLUS expression .)
-    SEMICOLON       reduce using rule 6 (expression -> expression PLUS expression .)
-    TIMES           shift and go to state 21
-    DIVIDE          shift and go to state 23
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
-  ! TIMES           [ reduce using rule 6 (expression -> expression PLUS expression .) ]
-  ! DIVIDE          [ reduce using rule 6 (expression -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 20 ]
-  ! MINUS           [ shift and go to state 22 ]
-  ! AND             [ shift and go to state 24 ]
-  ! OR              [ shift and go to state 25 ]
-  ! INFTO           [ shift and go to state 26 ]
-  ! SUPTO           [ shift and go to state 27 ]
-
+    expression                     shift and go to state 40
 
 state 30
 
-    (7) expression -> expression TIMES expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (19) expression -> expression INFTO . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    RPAREN          reduce using rule 7 (expression -> expression TIMES expression .)
-    PLUS            reduce using rule 7 (expression -> expression TIMES expression .)
-    TIMES           reduce using rule 7 (expression -> expression TIMES expression .)
-    MINUS           reduce using rule 7 (expression -> expression TIMES expression .)
-    DIVIDE          reduce using rule 7 (expression -> expression TIMES expression .)
-    AND             reduce using rule 7 (expression -> expression TIMES expression .)
-    OR              reduce using rule 7 (expression -> expression TIMES expression .)
-    INFTO           reduce using rule 7 (expression -> expression TIMES expression .)
-    SUPTO           reduce using rule 7 (expression -> expression TIMES expression .)
-    SEMICOLON       reduce using rule 7 (expression -> expression TIMES expression .)
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
-  ! PLUS            [ shift and go to state 20 ]
-  ! TIMES           [ shift and go to state 21 ]
-  ! MINUS           [ shift and go to state 22 ]
-  ! DIVIDE          [ shift and go to state 23 ]
-  ! AND             [ shift and go to state 24 ]
-  ! OR              [ shift and go to state 25 ]
-  ! INFTO           [ shift and go to state 26 ]
-  ! SUPTO           [ shift and go to state 27 ]
-
+    expression                     shift and go to state 41
 
 state 31
 
-    (8) expression -> expression MINUS expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (20) expression -> expression SUPTO . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression TIMES expression
+    (9) expression -> . expression SAME expression
+    (10) expression -> . expression MINUS expression
+    (11) expression -> . expression DIVIDE expression
+    (12) expression -> . LPAREN expression RPAREN
+    (13) expression -> . NUMBER
+    (14) expression -> . NAME
+    (15) expression -> . TRUE
+    (16) expression -> . FALSE
+    (17) expression -> . expression AND expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression INFTO expression
+    (20) expression -> . expression SUPTO expression
 
-    RPAREN          reduce using rule 8 (expression -> expression MINUS expression .)
-    PLUS            reduce using rule 8 (expression -> expression MINUS expression .)
-    MINUS           reduce using rule 8 (expression -> expression MINUS expression .)
-    AND             reduce using rule 8 (expression -> expression MINUS expression .)
-    OR              reduce using rule 8 (expression -> expression MINUS expression .)
-    INFTO           reduce using rule 8 (expression -> expression MINUS expression .)
-    SUPTO           reduce using rule 8 (expression -> expression MINUS expression .)
-    SEMICOLON       reduce using rule 8 (expression -> expression MINUS expression .)
-    TIMES           shift and go to state 21
-    DIVIDE          shift and go to state 23
+    LPAREN          shift and go to state 13
+    NUMBER          shift and go to state 15
+    NAME            shift and go to state 16
+    TRUE            shift and go to state 17
+    FALSE           shift and go to state 18
 
-  ! TIMES           [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! DIVIDE          [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 20 ]
-  ! MINUS           [ shift and go to state 22 ]
-  ! AND             [ shift and go to state 24 ]
-  ! OR              [ shift and go to state 25 ]
-  ! INFTO           [ shift and go to state 26 ]
-  ! SUPTO           [ shift and go to state 27 ]
-
+    expression                     shift and go to state 42
 
 state 32
 
-    (9) expression -> expression DIVIDE expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (5) statement -> IF LPAREN expression RPAREN . LACOL BLOC RACOL
 
-    RPAREN          reduce using rule 9 (expression -> expression DIVIDE expression .)
-    PLUS            reduce using rule 9 (expression -> expression DIVIDE expression .)
-    TIMES           reduce using rule 9 (expression -> expression DIVIDE expression .)
-    MINUS           reduce using rule 9 (expression -> expression DIVIDE expression .)
-    DIVIDE          reduce using rule 9 (expression -> expression DIVIDE expression .)
-    AND             reduce using rule 9 (expression -> expression DIVIDE expression .)
-    OR              reduce using rule 9 (expression -> expression DIVIDE expression .)
-    INFTO           reduce using rule 9 (expression -> expression DIVIDE expression .)
-    SUPTO           reduce using rule 9 (expression -> expression DIVIDE expression .)
-    SEMICOLON       reduce using rule 9 (expression -> expression DIVIDE expression .)
-
-  ! PLUS            [ shift and go to state 20 ]
-  ! TIMES           [ shift and go to state 21 ]
-  ! MINUS           [ shift and go to state 22 ]
-  ! DIVIDE          [ shift and go to state 23 ]
-  ! AND             [ shift and go to state 24 ]
-  ! OR              [ shift and go to state 25 ]
-  ! INFTO           [ shift and go to state 26 ]
-  ! SUPTO           [ shift and go to state 27 ]
+    LACOL           shift and go to state 43
 
 
 state 33
 
-    (15) expression -> expression AND expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (12) expression -> LPAREN expression RPAREN .
 
-    RPAREN          reduce using rule 15 (expression -> expression AND expression .)
-    AND             reduce using rule 15 (expression -> expression AND expression .)
-    SEMICOLON       reduce using rule 15 (expression -> expression AND expression .)
-    PLUS            shift and go to state 20
-    TIMES           shift and go to state 21
-    MINUS           shift and go to state 22
-    DIVIDE          shift and go to state 23
-    OR              shift and go to state 25
-    INFTO           shift and go to state 26
-    SUPTO           shift and go to state 27
-
-  ! PLUS            [ reduce using rule 15 (expression -> expression AND expression .) ]
-  ! TIMES           [ reduce using rule 15 (expression -> expression AND expression .) ]
-  ! MINUS           [ reduce using rule 15 (expression -> expression AND expression .) ]
-  ! DIVIDE          [ reduce using rule 15 (expression -> expression AND expression .) ]
-  ! OR              [ reduce using rule 15 (expression -> expression AND expression .) ]
-  ! INFTO           [ reduce using rule 15 (expression -> expression AND expression .) ]
-  ! SUPTO           [ reduce using rule 15 (expression -> expression AND expression .) ]
-  ! AND             [ shift and go to state 24 ]
+    RPAREN          reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    SAME            reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    AND             reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    OR              reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    INFTO           reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    SUPTO           reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 12 (expression -> LPAREN expression RPAREN .)
 
 
 state 34
 
-    (16) expression -> expression OR expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (7) expression -> expression PLUS expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
 
-    RPAREN          reduce using rule 16 (expression -> expression OR expression .)
-    AND             reduce using rule 16 (expression -> expression OR expression .)
-    OR              reduce using rule 16 (expression -> expression OR expression .)
-    SEMICOLON       reduce using rule 16 (expression -> expression OR expression .)
-    PLUS            shift and go to state 20
-    TIMES           shift and go to state 21
-    MINUS           shift and go to state 22
-    DIVIDE          shift and go to state 23
-    INFTO           shift and go to state 26
-    SUPTO           shift and go to state 27
+    RPAREN          reduce using rule 7 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 7 (expression -> expression PLUS expression .)
+    SAME            reduce using rule 7 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 7 (expression -> expression PLUS expression .)
+    AND             reduce using rule 7 (expression -> expression PLUS expression .)
+    OR              reduce using rule 7 (expression -> expression PLUS expression .)
+    INFTO           reduce using rule 7 (expression -> expression PLUS expression .)
+    SUPTO           reduce using rule 7 (expression -> expression PLUS expression .)
+    SEMICOLON       reduce using rule 7 (expression -> expression PLUS expression .)
+    TIMES           shift and go to state 24
+    DIVIDE          shift and go to state 27
 
-  ! PLUS            [ reduce using rule 16 (expression -> expression OR expression .) ]
-  ! TIMES           [ reduce using rule 16 (expression -> expression OR expression .) ]
-  ! MINUS           [ reduce using rule 16 (expression -> expression OR expression .) ]
-  ! DIVIDE          [ reduce using rule 16 (expression -> expression OR expression .) ]
-  ! INFTO           [ reduce using rule 16 (expression -> expression OR expression .) ]
-  ! SUPTO           [ reduce using rule 16 (expression -> expression OR expression .) ]
-  ! AND             [ shift and go to state 24 ]
-  ! OR              [ shift and go to state 25 ]
+  ! TIMES           [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! SAME            [ shift and go to state 25 ]
+  ! MINUS           [ shift and go to state 26 ]
+  ! AND             [ shift and go to state 28 ]
+  ! OR              [ shift and go to state 29 ]
+  ! INFTO           [ shift and go to state 30 ]
+  ! SUPTO           [ shift and go to state 31 ]
 
 
 state 35
 
-    (17) expression -> expression INFTO expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (8) expression -> expression TIMES expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
 
-    RPAREN          reduce using rule 17 (expression -> expression INFTO expression .)
-    AND             reduce using rule 17 (expression -> expression INFTO expression .)
-    OR              reduce using rule 17 (expression -> expression INFTO expression .)
-    INFTO           reduce using rule 17 (expression -> expression INFTO expression .)
-    SUPTO           reduce using rule 17 (expression -> expression INFTO expression .)
-    SEMICOLON       reduce using rule 17 (expression -> expression INFTO expression .)
-    PLUS            shift and go to state 20
-    TIMES           shift and go to state 21
-    MINUS           shift and go to state 22
-    DIVIDE          shift and go to state 23
+    RPAREN          reduce using rule 8 (expression -> expression TIMES expression .)
+    PLUS            reduce using rule 8 (expression -> expression TIMES expression .)
+    TIMES           reduce using rule 8 (expression -> expression TIMES expression .)
+    SAME            reduce using rule 8 (expression -> expression TIMES expression .)
+    MINUS           reduce using rule 8 (expression -> expression TIMES expression .)
+    DIVIDE          reduce using rule 8 (expression -> expression TIMES expression .)
+    AND             reduce using rule 8 (expression -> expression TIMES expression .)
+    OR              reduce using rule 8 (expression -> expression TIMES expression .)
+    INFTO           reduce using rule 8 (expression -> expression TIMES expression .)
+    SUPTO           reduce using rule 8 (expression -> expression TIMES expression .)
+    SEMICOLON       reduce using rule 8 (expression -> expression TIMES expression .)
 
-  ! PLUS            [ reduce using rule 17 (expression -> expression INFTO expression .) ]
-  ! TIMES           [ reduce using rule 17 (expression -> expression INFTO expression .) ]
-  ! MINUS           [ reduce using rule 17 (expression -> expression INFTO expression .) ]
-  ! DIVIDE          [ reduce using rule 17 (expression -> expression INFTO expression .) ]
-  ! AND             [ shift and go to state 24 ]
-  ! OR              [ shift and go to state 25 ]
-  ! INFTO           [ shift and go to state 26 ]
-  ! SUPTO           [ shift and go to state 27 ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! TIMES           [ shift and go to state 24 ]
+  ! SAME            [ shift and go to state 25 ]
+  ! MINUS           [ shift and go to state 26 ]
+  ! DIVIDE          [ shift and go to state 27 ]
+  ! AND             [ shift and go to state 28 ]
+  ! OR              [ shift and go to state 29 ]
+  ! INFTO           [ shift and go to state 30 ]
+  ! SUPTO           [ shift and go to state 31 ]
 
 
 state 36
 
-    (18) expression -> expression SUPTO expression .
-    (6) expression -> expression . PLUS expression
-    (7) expression -> expression . TIMES expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . DIVIDE expression
-    (15) expression -> expression . AND expression
-    (16) expression -> expression . OR expression
-    (17) expression -> expression . INFTO expression
-    (18) expression -> expression . SUPTO expression
+    (9) expression -> expression SAME expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
 
-    RPAREN          reduce using rule 18 (expression -> expression SUPTO expression .)
-    AND             reduce using rule 18 (expression -> expression SUPTO expression .)
-    OR              reduce using rule 18 (expression -> expression SUPTO expression .)
-    INFTO           reduce using rule 18 (expression -> expression SUPTO expression .)
-    SUPTO           reduce using rule 18 (expression -> expression SUPTO expression .)
-    SEMICOLON       reduce using rule 18 (expression -> expression SUPTO expression .)
-    PLUS            shift and go to state 20
-    TIMES           shift and go to state 21
-    MINUS           shift and go to state 22
-    DIVIDE          shift and go to state 23
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for SAME resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for INFTO resolved as shift
+  ! shift/reduce conflict for SUPTO resolved as shift
+    RPAREN          reduce using rule 9 (expression -> expression SAME expression .)
+    SEMICOLON       reduce using rule 9 (expression -> expression SAME expression .)
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    SAME            shift and go to state 25
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+    INFTO           shift and go to state 30
+    SUPTO           shift and go to state 31
 
-  ! PLUS            [ reduce using rule 18 (expression -> expression SUPTO expression .) ]
-  ! TIMES           [ reduce using rule 18 (expression -> expression SUPTO expression .) ]
-  ! MINUS           [ reduce using rule 18 (expression -> expression SUPTO expression .) ]
-  ! DIVIDE          [ reduce using rule 18 (expression -> expression SUPTO expression .) ]
-  ! AND             [ shift and go to state 24 ]
-  ! OR              [ shift and go to state 25 ]
-  ! INFTO           [ shift and go to state 26 ]
-  ! SUPTO           [ shift and go to state 27 ]
+  ! PLUS            [ reduce using rule 9 (expression -> expression SAME expression .) ]
+  ! TIMES           [ reduce using rule 9 (expression -> expression SAME expression .) ]
+  ! SAME            [ reduce using rule 9 (expression -> expression SAME expression .) ]
+  ! MINUS           [ reduce using rule 9 (expression -> expression SAME expression .) ]
+  ! DIVIDE          [ reduce using rule 9 (expression -> expression SAME expression .) ]
+  ! AND             [ reduce using rule 9 (expression -> expression SAME expression .) ]
+  ! OR              [ reduce using rule 9 (expression -> expression SAME expression .) ]
+  ! INFTO           [ reduce using rule 9 (expression -> expression SAME expression .) ]
+  ! SUPTO           [ reduce using rule 9 (expression -> expression SAME expression .) ]
 
+
+state 37
+
+    (10) expression -> expression MINUS expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    RPAREN          reduce using rule 10 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 10 (expression -> expression MINUS expression .)
+    SAME            reduce using rule 10 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 10 (expression -> expression MINUS expression .)
+    AND             reduce using rule 10 (expression -> expression MINUS expression .)
+    OR              reduce using rule 10 (expression -> expression MINUS expression .)
+    INFTO           reduce using rule 10 (expression -> expression MINUS expression .)
+    SUPTO           reduce using rule 10 (expression -> expression MINUS expression .)
+    SEMICOLON       reduce using rule 10 (expression -> expression MINUS expression .)
+    TIMES           shift and go to state 24
+    DIVIDE          shift and go to state 27
+
+  ! TIMES           [ reduce using rule 10 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 10 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! SAME            [ shift and go to state 25 ]
+  ! MINUS           [ shift and go to state 26 ]
+  ! AND             [ shift and go to state 28 ]
+  ! OR              [ shift and go to state 29 ]
+  ! INFTO           [ shift and go to state 30 ]
+  ! SUPTO           [ shift and go to state 31 ]
+
+
+state 38
+
+    (11) expression -> expression DIVIDE expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    RPAREN          reduce using rule 11 (expression -> expression DIVIDE expression .)
+    PLUS            reduce using rule 11 (expression -> expression DIVIDE expression .)
+    TIMES           reduce using rule 11 (expression -> expression DIVIDE expression .)
+    SAME            reduce using rule 11 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 11 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 11 (expression -> expression DIVIDE expression .)
+    AND             reduce using rule 11 (expression -> expression DIVIDE expression .)
+    OR              reduce using rule 11 (expression -> expression DIVIDE expression .)
+    INFTO           reduce using rule 11 (expression -> expression DIVIDE expression .)
+    SUPTO           reduce using rule 11 (expression -> expression DIVIDE expression .)
+    SEMICOLON       reduce using rule 11 (expression -> expression DIVIDE expression .)
+
+  ! PLUS            [ shift and go to state 23 ]
+  ! TIMES           [ shift and go to state 24 ]
+  ! SAME            [ shift and go to state 25 ]
+  ! MINUS           [ shift and go to state 26 ]
+  ! DIVIDE          [ shift and go to state 27 ]
+  ! AND             [ shift and go to state 28 ]
+  ! OR              [ shift and go to state 29 ]
+  ! INFTO           [ shift and go to state 30 ]
+  ! SUPTO           [ shift and go to state 31 ]
+
+
+state 39
+
+    (17) expression -> expression AND expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    RPAREN          reduce using rule 17 (expression -> expression AND expression .)
+    SAME            reduce using rule 17 (expression -> expression AND expression .)
+    AND             reduce using rule 17 (expression -> expression AND expression .)
+    SEMICOLON       reduce using rule 17 (expression -> expression AND expression .)
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    OR              shift and go to state 29
+    INFTO           shift and go to state 30
+    SUPTO           shift and go to state 31
+
+  ! PLUS            [ reduce using rule 17 (expression -> expression AND expression .) ]
+  ! TIMES           [ reduce using rule 17 (expression -> expression AND expression .) ]
+  ! MINUS           [ reduce using rule 17 (expression -> expression AND expression .) ]
+  ! DIVIDE          [ reduce using rule 17 (expression -> expression AND expression .) ]
+  ! OR              [ reduce using rule 17 (expression -> expression AND expression .) ]
+  ! INFTO           [ reduce using rule 17 (expression -> expression AND expression .) ]
+  ! SUPTO           [ reduce using rule 17 (expression -> expression AND expression .) ]
+  ! SAME            [ shift and go to state 25 ]
+  ! AND             [ shift and go to state 28 ]
+
+
+state 40
+
+    (18) expression -> expression OR expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    RPAREN          reduce using rule 18 (expression -> expression OR expression .)
+    SAME            reduce using rule 18 (expression -> expression OR expression .)
+    AND             reduce using rule 18 (expression -> expression OR expression .)
+    OR              reduce using rule 18 (expression -> expression OR expression .)
+    SEMICOLON       reduce using rule 18 (expression -> expression OR expression .)
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    INFTO           shift and go to state 30
+    SUPTO           shift and go to state 31
+
+  ! PLUS            [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! TIMES           [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! MINUS           [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! DIVIDE          [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! INFTO           [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! SUPTO           [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! SAME            [ shift and go to state 25 ]
+  ! AND             [ shift and go to state 28 ]
+  ! OR              [ shift and go to state 29 ]
+
+
+state 41
+
+    (19) expression -> expression INFTO expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    RPAREN          reduce using rule 19 (expression -> expression INFTO expression .)
+    SAME            reduce using rule 19 (expression -> expression INFTO expression .)
+    AND             reduce using rule 19 (expression -> expression INFTO expression .)
+    OR              reduce using rule 19 (expression -> expression INFTO expression .)
+    INFTO           reduce using rule 19 (expression -> expression INFTO expression .)
+    SUPTO           reduce using rule 19 (expression -> expression INFTO expression .)
+    SEMICOLON       reduce using rule 19 (expression -> expression INFTO expression .)
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+
+  ! PLUS            [ reduce using rule 19 (expression -> expression INFTO expression .) ]
+  ! TIMES           [ reduce using rule 19 (expression -> expression INFTO expression .) ]
+  ! MINUS           [ reduce using rule 19 (expression -> expression INFTO expression .) ]
+  ! DIVIDE          [ reduce using rule 19 (expression -> expression INFTO expression .) ]
+  ! SAME            [ shift and go to state 25 ]
+  ! AND             [ shift and go to state 28 ]
+  ! OR              [ shift and go to state 29 ]
+  ! INFTO           [ shift and go to state 30 ]
+  ! SUPTO           [ shift and go to state 31 ]
+
+
+state 42
+
+    (20) expression -> expression SUPTO expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . TIMES expression
+    (9) expression -> expression . SAME expression
+    (10) expression -> expression . MINUS expression
+    (11) expression -> expression . DIVIDE expression
+    (17) expression -> expression . AND expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . INFTO expression
+    (20) expression -> expression . SUPTO expression
+
+    RPAREN          reduce using rule 20 (expression -> expression SUPTO expression .)
+    SAME            reduce using rule 20 (expression -> expression SUPTO expression .)
+    AND             reduce using rule 20 (expression -> expression SUPTO expression .)
+    OR              reduce using rule 20 (expression -> expression SUPTO expression .)
+    INFTO           reduce using rule 20 (expression -> expression SUPTO expression .)
+    SUPTO           reduce using rule 20 (expression -> expression SUPTO expression .)
+    SEMICOLON       reduce using rule 20 (expression -> expression SUPTO expression .)
+    PLUS            shift and go to state 23
+    TIMES           shift and go to state 24
+    MINUS           shift and go to state 26
+    DIVIDE          shift and go to state 27
+
+  ! PLUS            [ reduce using rule 20 (expression -> expression SUPTO expression .) ]
+  ! TIMES           [ reduce using rule 20 (expression -> expression SUPTO expression .) ]
+  ! MINUS           [ reduce using rule 20 (expression -> expression SUPTO expression .) ]
+  ! DIVIDE          [ reduce using rule 20 (expression -> expression SUPTO expression .) ]
+  ! SAME            [ shift and go to state 25 ]
+  ! AND             [ shift and go to state 28 ]
+  ! OR              [ shift and go to state 29 ]
+  ! INFTO           [ shift and go to state 30 ]
+  ! SUPTO           [ shift and go to state 31 ]
+
+
+state 43
+
+    (5) statement -> IF LPAREN expression RPAREN LACOL . BLOC RACOL
+    (2) BLOC -> . BLOC statement SEMICOLON
+    (3) BLOC -> . statement SEMICOLON
+    (4) statement -> . PRINT LPAREN expression RPAREN
+    (5) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (6) statement -> . NAME AFFECT expression
+
+    PRINT           shift and go to state 4
+    IF              shift and go to state 5
+    NAME            shift and go to state 6
+
+    BLOC                           shift and go to state 44
+    statement                      shift and go to state 3
+
+state 44
+
+    (5) statement -> IF LPAREN expression RPAREN LACOL BLOC . RACOL
+    (2) BLOC -> BLOC . statement SEMICOLON
+    (4) statement -> . PRINT LPAREN expression RPAREN
+    (5) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (6) statement -> . NAME AFFECT expression
+
+    RACOL           shift and go to state 45
+    PRINT           shift and go to state 4
+    IF              shift and go to state 5
+    NAME            shift and go to state 6
+
+    statement                      shift and go to state 7
+
+state 45
+
+    (5) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .
+
+    SEMICOLON       reduce using rule 5 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 36 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 36 resolved as shift
+WARNING: shift/reduce conflict for SAME in state 36 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 36 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 36 resolved as shift
+WARNING: shift/reduce conflict for AND in state 36 resolved as shift
+WARNING: shift/reduce conflict for OR in state 36 resolved as shift
+WARNING: shift/reduce conflict for INFTO in state 36 resolved as shift
+WARNING: shift/reduce conflict for SUPTO in state 36 resolved as shift

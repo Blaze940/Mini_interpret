@@ -6,13 +6,14 @@
 from genereTreeGraphviz2 import printTreeGraph
 
 reserved = {
-    'print' : 'PRINT'
+    'print' : 'PRINT',
+    'if' : 'IF'
     #print en minuscule reconnu dans calc
 }
 tokens = [
     'NUMBER','MINUS',
     'PLUS','TIMES','DIVIDE',
-    'LPAREN','RPAREN', 'AND', 'OR','TRUE','FALSE', 'SEMICOLON','NAME','AFFECT', 'INFTO', 'SUPTO','SAME'
+    'LPAREN','RPAREN', 'AND', 'OR','TRUE','FALSE', 'SEMICOLON','NAME','AFFECT', 'INFTO', 'SUPTO','SAME','LACOL','RACOL'
     ] + list(reserved.values())
 # Tokens
 t_SEMICOLON = r'\;'
@@ -30,8 +31,9 @@ t_AFFECT  = r'='
 t_INFTO   = r'\<'
 t_SUPTO   = r'\>'
 t_SAME    = r'=='
+t_LACOL   = r'\{'
+t_RACOL   = r'\}'
 names = {}
-tup = (('*', ('+', 1, 2),3))
 
 def t_NAME(t):
     r'_[a-zA-Z_0-9]+ | [a-zA-Z][a-zA-Z_0-9]*'
@@ -86,6 +88,10 @@ def p_statement_print(p):
     'statement : PRINT LPAREN expression RPAREN'
     p[0] = ('print', p[3])
 
+def p_if(p) :
+    'statement : IF LPAREN expression RPAREN LACOL BLOC RACOL '
+    p[0] = ('if',p[3],p[6])
+
 def p_statement_affect(p):
     'statement : NAME AFFECT expression '
     p[0] = ('assign', p[1], p[3])
@@ -97,6 +103,10 @@ def p_expression_binop_plus(p):
 def p_expression_binop_times(p):
     'expression : expression TIMES expression'
     p[0] = ('*', p[1], p[3])
+
+def p_expression_same(p):
+    'expression : expression SAME expression'
+    p[0] = ('==', p[1], p[3])
 
 def p_expression_binop_divide_and_minus(p):
     '''expression : expression MINUS expression
@@ -143,18 +153,6 @@ def p_expression_inequal(p) :
 def p_error(p):
     print("Syntax error at '%s'" % p.value)
 
-def evalInst(t) :
-    print(' evalInst de ', t)
-    if t == 'empty': return
-    elif t[0] == 'bloc':
-        evalInst(t[1])
-        evalInst(t[2])
-    elif t[0] == 'assign':
-        names[t[1]] = eval(t[2])
-    elif t[0] == 'print':
-        print('Calc >>',eval(t[1]))
-
-
 def eval(t) : #evalExpre
     print(' eval de ', t)
     if type(t) is int:
@@ -181,11 +179,23 @@ def eval(t) : #evalExpre
         elif t[0] == '==':
             return eval(t[1]) == eval(t[2])
 
-
+def evalInst(t) :
+    print(' evalInst de ', t)
+    if t == 'empty': return
+    elif t[0] == 'bloc':
+        evalInst(t[1])
+        evalInst(t[2])
+    elif t[0] == 'assign':
+        names[t[1]] = eval(t[2])
+    elif t[0] == 'print':
+        print('Calc >>',eval(t[1]))
+    elif t[0] == 'if':
+        if eval(t[1]):
+            evalInst(t[2])
 
 import ply.yacc as yacc
 yacc.yacc()
-s = ' a=2 ; print(a) ; '
+s = 'if(0){ print(1+2) ; x=4; x=x+1; } ;'
 #s = input('calc > ')
 #s = ' eval(tup) ; '
 yacc.parse(s)

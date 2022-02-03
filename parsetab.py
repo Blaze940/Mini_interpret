@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftANDleftORnonassocINFTOSUPTOAFFECTleftPLUSMINUSleftTIMESDIVIDENUMBER MINUS PLUS TIMES DIVIDE LPAREN RPAREN AND OR TRUE FALSE SEMICOLON NAME AFFECT INFTO SUPTO SAME PRINTSTART : BLOC BLOC : BLOC statement SEMICOLON\n           | statement SEMICOLON statement : PRINT LPAREN expression RPARENstatement : NAME AFFECT expression expression : expression PLUS expressionexpression : expression TIMES expressionexpression : expression MINUS expression\n\t\t\t\t| expression DIVIDE expressionexpression : LPAREN expression RPARENexpression : NUMBERexpression : NAMEexpression : TRUEexpression : FALSEexpression : expression AND expression\n                | expression OR expressionexpression : expression INFTO expression\n                    | expression SUPTO expression '
+_lr_signature = 'leftANDleftORnonassocINFTOSUPTOAFFECTleftPLUSMINUSleftTIMESDIVIDENUMBER MINUS PLUS TIMES DIVIDE LPAREN RPAREN AND OR TRUE FALSE SEMICOLON NAME AFFECT INFTO SUPTO SAME LACOL RACOL PRINT IFSTART : BLOC BLOC : BLOC statement SEMICOLON\n           | statement SEMICOLON statement : PRINT LPAREN expression RPARENstatement : IF LPAREN expression RPAREN LACOL BLOC RACOL statement : NAME AFFECT expression expression : expression PLUS expressionexpression : expression TIMES expressionexpression : expression SAME expressionexpression : expression MINUS expression\n\t\t\t\t| expression DIVIDE expressionexpression : LPAREN expression RPARENexpression : NUMBERexpression : NAMEexpression : TRUEexpression : FALSEexpression : expression AND expression\n                | expression OR expressionexpression : expression INFTO expression\n                    | expression SUPTO expression '
     
-_lr_action_items = {'PRINT':([0,2,7,10,],[4,4,-3,-2,]),'NAME':([0,2,7,8,9,10,11,20,21,22,23,24,25,26,27,],[5,5,-3,14,14,-2,14,14,14,14,14,14,14,14,14,]),'$end':([1,2,7,10,],[0,-1,-3,-2,]),'SEMICOLON':([3,6,13,14,15,16,17,19,28,29,30,31,32,33,34,35,36,],[7,10,-11,-12,-13,-14,-5,-4,-10,-6,-7,-8,-9,-15,-16,-17,-18,]),'LPAREN':([4,8,9,11,20,21,22,23,24,25,26,27,],[8,11,11,11,11,11,11,11,11,11,11,11,]),'AFFECT':([5,],[9,]),'NUMBER':([8,9,11,20,21,22,23,24,25,26,27,],[13,13,13,13,13,13,13,13,13,13,13,]),'TRUE':([8,9,11,20,21,22,23,24,25,26,27,],[15,15,15,15,15,15,15,15,15,15,15,]),'FALSE':([8,9,11,20,21,22,23,24,25,26,27,],[16,16,16,16,16,16,16,16,16,16,16,]),'RPAREN':([12,13,14,15,16,18,28,29,30,31,32,33,34,35,36,],[19,-11,-12,-13,-14,28,-10,-6,-7,-8,-9,-15,-16,-17,-18,]),'PLUS':([12,13,14,15,16,17,18,28,29,30,31,32,33,34,35,36,],[20,-11,-12,-13,-14,20,20,-10,-6,-7,-8,-9,20,20,20,20,]),'TIMES':([12,13,14,15,16,17,18,28,29,30,31,32,33,34,35,36,],[21,-11,-12,-13,-14,21,21,-10,21,-7,21,-9,21,21,21,21,]),'MINUS':([12,13,14,15,16,17,18,28,29,30,31,32,33,34,35,36,],[22,-11,-12,-13,-14,22,22,-10,-6,-7,-8,-9,22,22,22,22,]),'DIVIDE':([12,13,14,15,16,17,18,28,29,30,31,32,33,34,35,36,],[23,-11,-12,-13,-14,23,23,-10,23,-7,23,-9,23,23,23,23,]),'AND':([12,13,14,15,16,17,18,28,29,30,31,32,33,34,35,36,],[24,-11,-12,-13,-14,24,24,-10,-6,-7,-8,-9,-15,-16,-17,-18,]),'OR':([12,13,14,15,16,17,18,28,29,30,31,32,33,34,35,36,],[25,-11,-12,-13,-14,25,25,-10,-6,-7,-8,-9,25,-16,-17,-18,]),'INFTO':([12,13,14,15,16,17,18,28,29,30,31,32,33,34,35,36,],[26,-11,-12,-13,-14,26,26,-10,-6,-7,-8,-9,26,26,None,None,]),'SUPTO':([12,13,14,15,16,17,18,28,29,30,31,32,33,34,35,36,],[27,-11,-12,-13,-14,27,27,-10,-6,-7,-8,-9,27,27,None,None,]),}
+_lr_action_items = {'PRINT':([0,2,8,12,43,44,],[4,4,-3,-2,4,4,]),'IF':([0,2,8,12,43,44,],[5,5,-3,-2,5,5,]),'NAME':([0,2,8,9,10,11,12,13,23,24,25,26,27,28,29,30,31,43,44,],[6,6,-3,16,16,16,-2,16,16,16,16,16,16,16,16,16,16,6,6,]),'$end':([1,2,8,12,],[0,-1,-3,-2,]),'SEMICOLON':([3,7,15,16,17,18,20,22,33,34,35,36,37,38,39,40,41,42,45,],[8,12,-13,-14,-15,-16,-6,-4,-12,-7,-8,-9,-10,-11,-17,-18,-19,-20,-5,]),'LPAREN':([4,5,9,10,11,13,23,24,25,26,27,28,29,30,31,],[9,10,13,13,13,13,13,13,13,13,13,13,13,13,13,]),'AFFECT':([6,],[11,]),'RACOL':([8,12,44,],[-3,-2,45,]),'NUMBER':([9,10,11,13,23,24,25,26,27,28,29,30,31,],[15,15,15,15,15,15,15,15,15,15,15,15,15,]),'TRUE':([9,10,11,13,23,24,25,26,27,28,29,30,31,],[17,17,17,17,17,17,17,17,17,17,17,17,17,]),'FALSE':([9,10,11,13,23,24,25,26,27,28,29,30,31,],[18,18,18,18,18,18,18,18,18,18,18,18,18,]),'RPAREN':([14,15,16,17,18,19,21,33,34,35,36,37,38,39,40,41,42,],[22,-13,-14,-15,-16,32,33,-12,-7,-8,-9,-10,-11,-17,-18,-19,-20,]),'PLUS':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[23,-13,-14,-15,-16,23,23,23,-12,-7,-8,23,-10,-11,23,23,23,23,]),'TIMES':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[24,-13,-14,-15,-16,24,24,24,-12,24,-8,24,24,-11,24,24,24,24,]),'SAME':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[25,-13,-14,-15,-16,25,25,25,-12,-7,-8,25,-10,-11,-17,-18,-19,-20,]),'MINUS':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[26,-13,-14,-15,-16,26,26,26,-12,-7,-8,26,-10,-11,26,26,26,26,]),'DIVIDE':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[27,-13,-14,-15,-16,27,27,27,-12,27,-8,27,27,-11,27,27,27,27,]),'AND':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[28,-13,-14,-15,-16,28,28,28,-12,-7,-8,28,-10,-11,-17,-18,-19,-20,]),'OR':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[29,-13,-14,-15,-16,29,29,29,-12,-7,-8,29,-10,-11,29,-18,-19,-20,]),'INFTO':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[30,-13,-14,-15,-16,30,30,30,-12,-7,-8,30,-10,-11,30,30,None,None,]),'SUPTO':([14,15,16,17,18,19,20,21,33,34,35,36,37,38,39,40,41,42,],[31,-13,-14,-15,-16,31,31,31,-12,-7,-8,31,-10,-11,31,31,None,None,]),'LACOL':([32,],[43,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'START':([0,],[1,]),'BLOC':([0,],[2,]),'statement':([0,2,],[3,6,]),'expression':([8,9,11,20,21,22,23,24,25,26,27,],[12,17,18,29,30,31,32,33,34,35,36,]),}
+_lr_goto_items = {'START':([0,],[1,]),'BLOC':([0,43,],[2,44,]),'statement':([0,2,43,44,],[3,7,3,7,]),'expression':([9,10,11,13,23,24,25,26,27,28,29,30,31,],[14,19,20,21,34,35,36,37,38,39,40,41,42,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,22 +26,24 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> START","S'",1,None,None,None),
-  ('START -> BLOC','START',1,'p_start','Brouillon.py',71),
-  ('BLOC -> BLOC statement SEMICOLON','BLOC',3,'p_bloc','Brouillon.py',78),
-  ('BLOC -> statement SEMICOLON','BLOC',2,'p_bloc','Brouillon.py',79),
-  ('statement -> PRINT LPAREN expression RPAREN','statement',4,'p_statement_print','Brouillon.py',85),
-  ('statement -> NAME AFFECT expression','statement',3,'p_statement_affect','Brouillon.py',89),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_binop_plus','Brouillon.py',93),
-  ('expression -> expression TIMES expression','expression',3,'p_expression_binop_times','Brouillon.py',97),
-  ('expression -> expression MINUS expression','expression',3,'p_expression_binop_divide_and_minus','Brouillon.py',101),
-  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop_divide_and_minus','Brouillon.py',102),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','Brouillon.py',107),
-  ('expression -> NUMBER','expression',1,'p_expression_number','Brouillon.py',111),
-  ('expression -> NAME','expression',1,'p_expression_name','Brouillon.py',115),
-  ('expression -> TRUE','expression',1,'p_expressionTrue','Brouillon.py',119),
-  ('expression -> FALSE','expression',1,'p_expressionFalse','Brouillon.py',123),
-  ('expression -> expression AND expression','expression',3,'p_expression_binop_boop','Brouillon.py',127),
-  ('expression -> expression OR expression','expression',3,'p_expression_binop_boop','Brouillon.py',128),
-  ('expression -> expression INFTO expression','expression',3,'p_expression_inequal','Brouillon.py',135),
-  ('expression -> expression SUPTO expression','expression',3,'p_expression_inequal','Brouillon.py',136),
+  ('START -> BLOC','START',1,'p_start','Brouillon.py',73),
+  ('BLOC -> BLOC statement SEMICOLON','BLOC',3,'p_bloc','Brouillon.py',80),
+  ('BLOC -> statement SEMICOLON','BLOC',2,'p_bloc','Brouillon.py',81),
+  ('statement -> PRINT LPAREN expression RPAREN','statement',4,'p_statement_print','Brouillon.py',88),
+  ('statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL','statement',7,'p_if','Brouillon.py',92),
+  ('statement -> NAME AFFECT expression','statement',3,'p_statement_affect','Brouillon.py',96),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop_plus','Brouillon.py',100),
+  ('expression -> expression TIMES expression','expression',3,'p_expression_binop_times','Brouillon.py',104),
+  ('expression -> expression SAME expression','expression',3,'p_expression_same','Brouillon.py',108),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_binop_divide_and_minus','Brouillon.py',112),
+  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop_divide_and_minus','Brouillon.py',113),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','Brouillon.py',118),
+  ('expression -> NUMBER','expression',1,'p_expression_number','Brouillon.py',122),
+  ('expression -> NAME','expression',1,'p_expression_name','Brouillon.py',126),
+  ('expression -> TRUE','expression',1,'p_expressionTrue','Brouillon.py',130),
+  ('expression -> FALSE','expression',1,'p_expressionFalse','Brouillon.py',134),
+  ('expression -> expression AND expression','expression',3,'p_expression_binop_boop','Brouillon.py',138),
+  ('expression -> expression OR expression','expression',3,'p_expression_binop_boop','Brouillon.py',139),
+  ('expression -> expression INFTO expression','expression',3,'p_expression_inequal','Brouillon.py',146),
+  ('expression -> expression SUPTO expression','expression',3,'p_expression_inequal','Brouillon.py',147),
 ]
