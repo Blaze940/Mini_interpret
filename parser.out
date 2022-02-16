@@ -7,7 +7,7 @@ Rule 1     START -> BLOC
 Rule 2     BLOC -> BLOC statement SEMICOLON
 Rule 3     BLOC -> statement SEMICOLON
 Rule 4     statement -> PRINT LPAREN expression RPAREN
-Rule 5     statement -> PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+Rule 5     statement -> PRINTSTR LPAREN STR RPAREN
 Rule 6     statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL
 Rule 7     statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL
 Rule 8     statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -34,7 +34,6 @@ Terminals, with rules where they appear
 
 AFFECT               : 10 12
 AND                  : 23
-DBQUOTE              : 5 5
 DIVIDE               : 17
 ELSE                 : 8
 FALSE                : 22
@@ -77,7 +76,7 @@ state 0
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -108,7 +107,7 @@ state 2
     (1) START -> BLOC .
     (2) BLOC -> BLOC . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -143,7 +142,7 @@ state 4
 
 state 5
 
-    (5) statement -> PRINTSTR . LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> PRINTSTR . LPAREN STR RPAREN
 
     LPAREN          shift and go to state 13
 
@@ -229,9 +228,9 @@ state 12
 
 state 13
 
-    (5) statement -> PRINTSTR LPAREN . DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> PRINTSTR LPAREN . STR RPAREN
 
-    DBQUOTE         shift and go to state 26
+    STR             shift and go to state 26
 
 
 state 14
@@ -291,7 +290,7 @@ state 16
 
     (9) statement -> FOR LPAREN . statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -479,9 +478,9 @@ state 25
 
 state 26
 
-    (5) statement -> PRINTSTR LPAREN DBQUOTE . STR DBQUOTE RPAREN
+    (5) statement -> PRINTSTR LPAREN STR . RPAREN
 
-    STR             shift and go to state 44
+    RPAREN          shift and go to state 44
 
 
 state 27
@@ -871,16 +870,17 @@ state 43
 
 state 44
 
-    (5) statement -> PRINTSTR LPAREN DBQUOTE STR . DBQUOTE RPAREN
+    (5) statement -> PRINTSTR LPAREN STR RPAREN .
 
-    DBQUOTE         shift and go to state 59
+    SEMICOLON       reduce using rule 5 (statement -> PRINTSTR LPAREN STR RPAREN .)
+    RPAREN          reduce using rule 5 (statement -> PRINTSTR LPAREN STR RPAREN .)
 
 
 state 45
 
     (6) statement -> WHILE LPAREN expression RPAREN . LACOL BLOC RACOL
 
-    LACOL           shift and go to state 60
+    LACOL           shift and go to state 59
 
 
 state 46
@@ -888,7 +888,7 @@ state 46
     (7) statement -> IF LPAREN expression RPAREN . LACOL BLOC RACOL
     (8) statement -> IF LPAREN expression RPAREN . LACOL BLOC RACOL ELSE LACOL BLOC RACOL
 
-    LACOL           shift and go to state 61
+    LACOL           shift and go to state 60
 
 
 state 47
@@ -915,7 +915,7 @@ state 47
     TRUE            shift and go to state 24
     FALSE           shift and go to state 25
 
-    expression                     shift and go to state 62
+    expression                     shift and go to state 61
 
 state 48
 
@@ -1295,18 +1295,11 @@ state 58
 
 state 59
 
-    (5) statement -> PRINTSTR LPAREN DBQUOTE STR DBQUOTE . RPAREN
-
-    RPAREN          shift and go to state 63
-
-
-state 60
-
     (6) statement -> WHILE LPAREN expression RPAREN LACOL . BLOC RACOL
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1322,17 +1315,17 @@ state 60
     FOR             shift and go to state 8
     NAME            shift and go to state 9
 
-    BLOC                           shift and go to state 64
+    BLOC                           shift and go to state 62
     statement                      shift and go to state 3
 
-state 61
+state 60
 
     (7) statement -> IF LPAREN expression RPAREN LACOL . BLOC RACOL
     (8) statement -> IF LPAREN expression RPAREN LACOL . BLOC RACOL ELSE LACOL BLOC RACOL
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1348,10 +1341,10 @@ state 61
     FOR             shift and go to state 8
     NAME            shift and go to state 9
 
-    BLOC                           shift and go to state 65
+    BLOC                           shift and go to state 63
     statement                      shift and go to state 3
 
-state 62
+state 61
 
     (9) statement -> FOR LPAREN statement SEMICOLON expression . SEMICOLON statement RPAREN LACOL BLOC RACOL
     (13) expression -> expression . PLUS expression
@@ -1364,7 +1357,7 @@ state 62
     (25) expression -> expression . INFTO expression
     (26) expression -> expression . SUPTO expression
 
-    SEMICOLON       shift and go to state 66
+    SEMICOLON       shift and go to state 64
     PLUS            shift and go to state 35
     TIMES           shift and go to state 36
     SAME            shift and go to state 37
@@ -1376,20 +1369,12 @@ state 62
     SUPTO           shift and go to state 43
 
 
-state 63
-
-    (5) statement -> PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN .
-
-    SEMICOLON       reduce using rule 5 (statement -> PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN .)
-    RPAREN          reduce using rule 5 (statement -> PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN .)
-
-
-state 64
+state 62
 
     (6) statement -> WHILE LPAREN expression RPAREN LACOL BLOC . RACOL
     (2) BLOC -> BLOC . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1398,7 +1383,7 @@ state 64
     (11) statement -> . NAME PLUS PLUS
     (12) statement -> . NAME PLUS AFFECT expression
 
-    RACOL           shift and go to state 67
+    RACOL           shift and go to state 65
     PRINT           shift and go to state 4
     PRINTSTR        shift and go to state 5
     WHILE           shift and go to state 6
@@ -1408,13 +1393,13 @@ state 64
 
     statement                      shift and go to state 10
 
-state 65
+state 63
 
     (7) statement -> IF LPAREN expression RPAREN LACOL BLOC . RACOL
     (8) statement -> IF LPAREN expression RPAREN LACOL BLOC . RACOL ELSE LACOL BLOC RACOL
     (2) BLOC -> BLOC . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1423,7 +1408,7 @@ state 65
     (11) statement -> . NAME PLUS PLUS
     (12) statement -> . NAME PLUS AFFECT expression
 
-    RACOL           shift and go to state 68
+    RACOL           shift and go to state 66
     PRINT           shift and go to state 4
     PRINTSTR        shift and go to state 5
     WHILE           shift and go to state 6
@@ -1433,11 +1418,11 @@ state 65
 
     statement                      shift and go to state 10
 
-state 66
+state 64
 
     (9) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON . statement RPAREN LACOL BLOC RACOL
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1453,9 +1438,9 @@ state 66
     FOR             shift and go to state 8
     NAME            shift and go to state 9
 
-    statement                      shift and go to state 69
+    statement                      shift and go to state 67
 
-state 67
+state 65
 
     (6) statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL .
 
@@ -1463,44 +1448,44 @@ state 67
     RPAREN          reduce using rule 6 (statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL .)
 
 
-state 68
+state 66
 
     (7) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .
     (8) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL . ELSE LACOL BLOC RACOL
 
     SEMICOLON       reduce using rule 7 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .)
     RPAREN          reduce using rule 7 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .)
-    ELSE            shift and go to state 70
+    ELSE            shift and go to state 68
+
+
+state 67
+
+    (9) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement . RPAREN LACOL BLOC RACOL
+
+    RPAREN          shift and go to state 69
+
+
+state 68
+
+    (8) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE . LACOL BLOC RACOL
+
+    LACOL           shift and go to state 70
 
 
 state 69
 
-    (9) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement . RPAREN LACOL BLOC RACOL
+    (9) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN . LACOL BLOC RACOL
 
-    RPAREN          shift and go to state 71
+    LACOL           shift and go to state 71
 
 
 state 70
-
-    (8) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE . LACOL BLOC RACOL
-
-    LACOL           shift and go to state 72
-
-
-state 71
-
-    (9) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN . LACOL BLOC RACOL
-
-    LACOL           shift and go to state 73
-
-
-state 72
 
     (8) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL . BLOC RACOL
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1516,16 +1501,16 @@ state 72
     FOR             shift and go to state 8
     NAME            shift and go to state 9
 
-    BLOC                           shift and go to state 74
+    BLOC                           shift and go to state 72
     statement                      shift and go to state 3
 
-state 73
+state 71
 
     (9) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL . BLOC RACOL
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1542,14 +1527,14 @@ state 73
     NAME            shift and go to state 9
 
     statement                      shift and go to state 3
-    BLOC                           shift and go to state 75
+    BLOC                           shift and go to state 73
 
-state 74
+state 72
 
     (8) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC . RACOL
     (2) BLOC -> BLOC . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1558,7 +1543,7 @@ state 74
     (11) statement -> . NAME PLUS PLUS
     (12) statement -> . NAME PLUS AFFECT expression
 
-    RACOL           shift and go to state 76
+    RACOL           shift and go to state 74
     PRINT           shift and go to state 4
     PRINTSTR        shift and go to state 5
     WHILE           shift and go to state 6
@@ -1568,12 +1553,12 @@ state 74
 
     statement                      shift and go to state 10
 
-state 75
+state 73
 
     (9) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC . RACOL
     (2) BLOC -> BLOC . statement SEMICOLON
     (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN
+    (5) statement -> . PRINTSTR LPAREN STR RPAREN
     (6) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
     (7) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
     (8) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
@@ -1582,7 +1567,7 @@ state 75
     (11) statement -> . NAME PLUS PLUS
     (12) statement -> . NAME PLUS AFFECT expression
 
-    RACOL           shift and go to state 77
+    RACOL           shift and go to state 75
     PRINT           shift and go to state 4
     PRINTSTR        shift and go to state 5
     WHILE           shift and go to state 6
@@ -1592,7 +1577,7 @@ state 75
 
     statement                      shift and go to state 10
 
-state 76
+state 74
 
     (8) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL .
 
@@ -1600,7 +1585,7 @@ state 76
     RPAREN          reduce using rule 8 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL .)
 
 
-state 77
+state 75
 
     (9) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL .
 
