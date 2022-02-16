@@ -7,15 +7,20 @@ from genereTreeGraphviz2 import printTreeGraph
 
 reserved = {
     'print' : 'PRINT',
-    'if' : 'IF'
+    'if': 'IF',
+    'while': 'WHILE',
+    'else': 'ELSE',
+    'for': 'FOR',
+    'printSring': 'PRINTSTR'
     #print en minuscule reconnu dans calc
 }
+#Lexique pour grammaire
 tokens = [
     'NUMBER','MINUS',
     'PLUS','TIMES','DIVIDE',
-    'LPAREN','RPAREN', 'AND', 'OR','TRUE','FALSE', 'SEMICOLON','NAME','AFFECT', 'INFTO', 'SUPTO','SAME','LACOL','RACOL'
+    'LPAREN','RPAREN', 'AND', 'OR','TRUE','FALSE', 'SEMICOLON','NAME','AFFECT', 'INFTO', 'SUPTO','SAME','LACOL','RACOL','STR','DBQUOTE'
     ] + list(reserved.values())
-# Tokens
+# Tokens (ce qui est marqué sur ta console )
 t_SEMICOLON = r'\;'
 t_PLUS    = r'\+'
 t_MINUS   = r'\-'
@@ -33,11 +38,17 @@ t_SUPTO   = r'\>'
 t_SAME    = r'=='
 t_LACOL   = r'\{'
 t_RACOL   = r'\}'
+t_DBQUOTE = r'\"'
 names = {}
 
 def t_NAME(t):
     r'_[a-zA-Z_0-9]+ | [a-zA-Z][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'NAME')
+    return t
+
+def t_STR(t):
+    r' [a-z A-Z0-9:_]+ '
+    t.type = reserved.get(t.value,'STR')
     return t
 
 def t_NUMBER(t):
@@ -85,16 +96,40 @@ def p_bloc(p):
         p[0] = ('bloc',p[1], 'empty')
 
 def p_statement_print(p):
-    'statement : PRINT LPAREN expression RPAREN'
+    'statement : PRINT LPAREN expression RPAREN '
     p[0] = ('print', p[3])
 
-def p_if(p) :
-    'statement : IF LPAREN expression RPAREN LACOL BLOC RACOL '
-    p[0] = ('if',p[3],p[6])
+def p_statement_printString(p):
+    'statement : PRINTSTR LPAREN DBQUOTE STR DBQUOTE RPAREN '
+    p[0] = ('printString', p[4])
+
+def p_statement_while(p):
+    'statement : WHILE LPAREN expression RPAREN LACOL BLOC RACOL '
+    p[0] = ('while', p[3], p[6])
+def p_statement_if(p):
+    ''' statement : IF LPAREN expression RPAREN LACOL BLOC RACOL
+    | IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL '''
+    if len(p) == 8:
+        p[0] = ('if', p[3], p[6])
+    else:
+        p[0] = ('if', p[3], p[6], 'else', p[10])
+
+def p_statement_for(p):
+    ''' statement : FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL '''
+    p[0] = ('for', p[3], p[5], p[7], p[10])
 
 def p_statement_affect(p):
-    'statement : NAME AFFECT expression '
-    p[0] = ('assign', p[1], p[3])
+    '''statement : NAME AFFECT expression
+                | NAME PLUS PLUS
+                | NAME PLUS AFFECT expression
+    '''
+    if len(p) == 5 :
+        p[0] = ('incr', p[1],p[4])
+    else :
+        if p[2] == '=' :
+            p[0] = ('assign', p[1], p[3])
+        elif (p[2] == '+') and (p[3] == '+') :
+            p[0] = ('plus_one', p[1], 1)
 
 def p_expression_binop_plus(p):
     'expression : expression PLUS expression'
@@ -187,16 +222,43 @@ def evalInst(t) :
         evalInst(t[2])
     elif t[0] == 'assign':
         names[t[1]] = eval(t[2])
+    elif t[0] == 'incr':
+        names[t[1]] = names[t[1]]+eval(t[2])
+    elif t[0] == 'plus_one':
+        names[t[1]] = names[t[1]]+1
     elif t[0] == 'print':
-        print('Calc >>',eval(t[1]))
+        print('SORTIE >>',eval(t[1]))
+    elif t[0] == 'printString' :
+        print('SORTIE >>',t[1])
     elif t[0] == 'if':
-        if eval(t[1]):
+        if len(t) == 3:
+            if eval(t[1]):
+                evalInst(t[2])
+        elif len(t) == 5:
+            if eval(t[1]):
+                evalInst(t[2])
+            else:
+                evalInst(t[4])
+
+    elif t[0] == 'while':
+        while eval(t[1]):
             evalInst(t[2])
+
+    elif t[0] == 'for':
+        evalInst(t[1])
+        while eval(t[2]):
+            evalInst(t[4])
+            evalInst(t[3])
+
 
 import ply.yacc as yacc
 yacc.yacc()
-s = 'if(0){ print(1+2) ; x=4; x=x+1; } ;'
-#s = input('calc > ')
-#s = ' eval(tup) ; '
-yacc.parse(s)
+# s = 'a = 0; b = 1 ; i = 0 ; while(i<10){ x = a+b ; print(x) ; a = b; b = x; i = i+1 ; } ;' #FIBO
+s = ' if(1){ printString("toto");x=5;};' #IF
+# s = input('calc > ')
 
+#BONUS
+# s = ' for(x=0 ; x<20 ; x+=5) { print(x); } ; ' #x+=
+# #s = ' for(x=0 ; x<5 ; x++) { print(x); } ; ' #x++
+
+yacc.parse(s)

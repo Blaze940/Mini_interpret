@@ -30,7 +30,6 @@ t_AFFECT  = r'='
 t_INFTO   = r'\<'
 t_SUPTO   = r'\>'
 names = {}
-tup = ('*', ('+',1,2),3)
 
 def t_NAME(t):
     r'_[a-zA-Z_0-9]+ | [a-zA-Z][a-zA-Z_0-9]*'
@@ -74,7 +73,6 @@ def p_bloc(p):
 def p_statement_print(p):
     'statement : PRINT LPAREN expression RPAREN'
     print(p[3])
-
 
 def p_statement_affect(p):
     'statement : NAME AFFECT expression '
@@ -123,9 +121,9 @@ def p_expressionFalse(p) :
 def p_expression_binop_boop(p) :
     '''expression : expression AND expression
                 | expression OR expression'''
-    if p[2] == '&':
+    if p[2] == '&' :
         p[0] = (p[1] and p[3])
-    elif p[2] == '|':
+    elif p[2] == '|' :
         p[0] = (p[1] or p[3])
 
 def p_expression_inequal(p) :
@@ -167,8 +165,8 @@ def eval(t) :
 
 import ply.yacc as yacc
 yacc.yacc()
-print(eval(tup))
-s = input('calc >> ')
+# print(eval(tup))
+s = input('Tappez votre code >> ')
 #s = ' print(eval(tup)) ; '
 yacc.parse(s)
 
