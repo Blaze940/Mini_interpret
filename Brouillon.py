@@ -6,12 +6,12 @@
 from genereTreeGraphviz2 import printTreeGraph
 
 reserved = {
-    'print' : 'PRINT',
+    'print': 'PRINT',
     'if': 'IF',
     'while': 'WHILE',
     'else': 'ELSE',
     'for': 'FOR',
-    'printString': 'PRINTSTR'
+    'printString': 'PRINTSTR',
     #print en minuscule reconnu dans calc
 }
 #Lexique pour grammaire
@@ -20,7 +20,8 @@ tokens = [
     'PLUS','TIMES','DIVIDE',
     'LPAREN','RPAREN', 'AND', 'OR','TRUE','FALSE', 'SEMICOLON','NAME','AFFECT', 'INFTO', 'SUPTO','SAME','LACOL','RACOL','STR'
     ] + list(reserved.values())
-# Tokens (ce qui est marqué sur ta console )
+# Tokens (ce qui est marqué sur la console )
+
 t_SEMICOLON = r'\;'
 t_PLUS    = r'\+'
 t_MINUS   = r'\-'
@@ -229,7 +230,7 @@ def evalInst(t) :
     elif t[0] == 'print':
         print('SORTIE >>',eval(t[1]))
     elif t[0] == 'printString':
-        print('SORTIE >>',(t[1])[1:-1])
+        print('SORTIE >>',t[1][1:-1])
     elif t[0] == 'if':
         if len(t) == 3:
             if eval(t[1]):
@@ -253,12 +254,13 @@ def evalInst(t) :
 
 import ply.yacc as yacc
 yacc.yacc()
-# s = 'a = 0; b = 1 ; i = 0 ; while(i<10){ x = a+b ; print(x) ; a = b; b = x; i = i+1 ; } ;' #FIBONACCI
-s = ' if(0){ print(10) ; printString("Mr BAUDOIN nous note : ") ;};' #IF + printString
+s = 'f0 = 0; f1 = 1 ; i = 0 ; while(i<10){ fs = f0+f1 ; print(fs) ; f0 = f1 ; f1 = fs; i = i+1 ; } ;' #FIBONACCI
+
 # s = input('calc > ')
 
 #BONUS
+# s = ' if(1){ print(10) ; printString("Mr BAUDOIN") ;};' #IF + printString
 # s = ' for(x=0 ; x<20 ; x+=5) { print(x); } ; ' #x+=
-# #s = ' for(x=0 ; x<5 ; x++) { print(x); } ; ' #x++
+# s = ' for(x=0 ; x<5 ; x++) { print(x); } ; ' #x++
 
 yacc.parse(s)
