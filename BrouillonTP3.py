@@ -101,14 +101,49 @@ def p_statement_print(p):
     'statement : PRINT LPAREN expression RPAREN '
     p[0] = ('print', p[3])
 
+
+# -------------------------- Fonction sans parametre ---------------------
+# FONCTION est un mot résérvé donc à chaque fois qu'on lance la commande le parser va reconnaitre ce mot
+# s = fonction toto() {print(3); x = 1+2 ;} ;
+# FONCTION = fonction
+# NAME = toto
+# BLOC = print(3); x = 1+2 ;
+
 def p_statement_fonction_void_spm(p):
     'statement : FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL'
     p[0] = ('function','empty',p[2], p[6])
-    #A refaire
+    
+# Ici on stock dans un tuple les valeurs qui nous intéressent à savoir :
+# #    'function' qui correspond au nom de l'instruction et qu'on peut retrouver dans la fonction evalinst 
+# #    'empty' correspond au paramètres dans notre cela sera sans paramètres
+# #    p[2]  = NAME et p[6] = BLOC 
 
+# A savoir : LES TOKENS LPAREN RPAREN LACOL ET RACOL n'ont pas besoin d'être défini, d'ou la différence entre TOKEN et RESERVED
+
+# Ici on stock dans un tuple les valeurs qui nous intéressent à savoir : 
+##      'call' qui correspond au nom de l'instruction et qu'on peut retrouver dans la fonction evalinst
+##      p[1] = NAME
 def p_statement_Call_fonction_void_spm(p):
     'statement : NAME LPAREN RPAREN'
     p[0] = ('call',p[1])
+
+# -------------------------- Fonction avecn  parametre ---------------------
+# FONCTION est un mot résérvé donc à chaque fois qu'on lance la commande le parser va reconnaitre ce mot
+# s = fonction toto(a,b) {print(3); x = 1+2 ;} ;
+# FONCTION = fonction
+# expression = a,b
+# NAME = toto
+# BLOC = print(3); x = 1+2 ;
+
+def p_statement_fonction_void_apm(p):
+    'statement : FONCTION NAME LPAREN expression RPAREN LACOL BLOC RACOL'
+    p[0] = ('function',p[2],('params',p[4]), p[6])
+
+def p_statement_Call_fonction_void_apm(p):
+    'statement : NAME LPAREN expression RPAREN'
+    p[0] = ('call_params',p[1],p[3])
+
+# ------------------------------------
 
 def p_statement_printString(p):
     'statement : PRINTSTR LPAREN STR RPAREN '
@@ -232,11 +267,21 @@ def evalInst(t) :
     elif t[0] == 'bloc':
         evalInst(t[1])
         evalInst(t[2])
+        # fonction sans parametres ('function', 'empty', p[2], p[6])
     elif t[0] == 'function':
+        # on affecte la valeur p[6] à la clé p[2] dans le dictionnaire functions = {} | NAME = BLOC
         functions[t[2]] = t[3]
     elif t[0] == 'call':
+          
+        #('call',p[1])
+        # fonction test(){print(1+1);}; test(); 'call' c'est le deuxieme test et non le deuxieme car la grammaire doit être exact (39min)
         f = functions[t[1]]
         evalInst(f)
+    elif t[0] == 'call_params':
+        # ('call_params',p[1],p[3])
+        a = functions[t[1]] 
+        a = (t[2], t[3])
+        evalInst(t[2])
     elif t[0] == 'assign':
         names[t[1]] = eval(t[2])
     elif t[0] == 'incr':
@@ -277,4 +322,5 @@ s = 'fonction test(){print(1+1); printString("Reussi");}; test();'
 #BONUS
 # s = ' for(x=0 ; x<20 ; x+=5) { print(x); } ; ' #x+=
 # s = ' for(x=0 ; x<5 ; x++) { print(x); } ; ' #x++
+s='fonction carre(a,b){print(a*a);}for(i=0;i<10;i=i+1;){carre(i, i);}'
 yacc.parse(s)
