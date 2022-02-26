@@ -279,8 +279,8 @@ def evalInst(t) :
         evalInst(f)
     elif t[0] == 'call_params':
         # ('call_params',p[1],p[3])
-        a = functions[t[1]] 
-        a = (t[2], t[3])
+    
+        functions[t[1]]= (t[2], t[3])
         evalInst(t[2])
     elif t[0] == 'assign':
         names[t[1]] = eval(t[2])
@@ -322,5 +322,5 @@ s = 'fonction test(){print(1+1); printString("Reussi");}; test();'
 #BONUS
 # s = ' for(x=0 ; x<20 ; x+=5) { print(x); } ; ' #x+=
 # s = ' for(x=0 ; x<5 ; x++) { print(x); } ; ' #x++
-s='fonction carre(a,b){print(a*a);}for(i=0;i<10;i=i+1;){carre(i, i);}'
+# s='fonction carre(a,b){print(a*a);}for(i=0;i<10;i=i+1;){carre(i, i);}'
 yacc.parse(s)
