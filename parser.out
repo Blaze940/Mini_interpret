@@ -6,69 +6,77 @@ Rule 0     S' -> START
 Rule 1     START -> BLOC
 Rule 2     BLOC -> BLOC statement SEMICOLON
 Rule 3     BLOC -> statement SEMICOLON
-Rule 4     statement -> PRINT LPAREN expression RPAREN
-Rule 5     statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-Rule 6     statement -> NAME LPAREN RPAREN
-Rule 7     statement -> PRINTSTR LPAREN STR RPAREN
-Rule 8     statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-Rule 9     statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL
-Rule 10    statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-Rule 11    statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-Rule 12    statement -> NAME AFFECT expression
-Rule 13    statement -> NAME PLUS PLUS
-Rule 14    statement -> NAME PLUS AFFECT expression
-Rule 15    expression -> expression PLUS expression
-Rule 16    expression -> expression TIMES expression
-Rule 17    expression -> expression SAME expression
-Rule 18    expression -> expression MINUS expression
-Rule 19    expression -> expression DIVIDE expression
-Rule 20    expression -> LPAREN expression RPAREN
-Rule 21    expression -> NUMBER
-Rule 22    expression -> NAME
-Rule 23    expression -> TRUE
-Rule 24    expression -> FALSE
-Rule 25    expression -> expression AND expression
-Rule 26    expression -> expression OR expression
-Rule 27    expression -> expression INFTO expression
-Rule 28    expression -> expression SUPTO expression
+Rule 4     PARAM -> NAME COMMA PARAM
+Rule 5     PARAM -> NUMBER COMMA PARAM
+Rule 6     PARAM -> NAME
+Rule 7     PARAM -> NUMBER
+Rule 8     statement -> PRINT LPAREN expression RPAREN
+Rule 9     statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+Rule 10    statement -> FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+Rule 11    statement -> NAME LPAREN RPAREN
+Rule 12    statement -> NAME LPAREN PARAM RPAREN
+Rule 13    statement -> PRINTSTR LPAREN STR RPAREN
+Rule 14    statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+Rule 15    statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL
+Rule 16    statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+Rule 17    statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+Rule 18    statement -> NAME AFFECT expression
+Rule 19    statement -> NAME PLUS PLUS
+Rule 20    statement -> NAME PLUS AFFECT expression
+Rule 21    expression -> expression PLUS expression
+Rule 22    expression -> expression TIMES expression
+Rule 23    expression -> expression SAME expression
+Rule 24    expression -> expression MINUS expression
+Rule 25    expression -> expression DIVIDE expression
+Rule 26    expression -> LPAREN expression RPAREN
+Rule 27    expression -> NUMBER
+Rule 28    expression -> NAME
+Rule 29    expression -> TRUE
+Rule 30    expression -> FALSE
+Rule 31    expression -> expression AND expression
+Rule 32    expression -> expression OR expression
+Rule 33    expression -> expression INFTO expression
+Rule 34    expression -> expression SUPTO expression
 
 Terminals, with rules where they appear
 
-AFFECT               : 12 14
-AND                  : 25
-DIVIDE               : 19
-ELSE                 : 10
-FALSE                : 24
-FONCTION             : 5
-FOR                  : 11
-IF                   : 9 10
-INFTO                : 27
-LACOL                : 5 8 9 10 10 11
-LPAREN               : 4 5 6 7 8 9 10 11 20
-MINUS                : 18
-NAME                 : 5 6 12 13 14 22
-NUMBER               : 21
-OR                   : 26
-PLUS                 : 13 13 14 15
-PRINT                : 4
-PRINTSTR             : 7
-RACOL                : 5 8 9 10 10 11
-RPAREN               : 4 5 6 7 8 9 10 11 20
-SAME                 : 17
-SEMICOLON            : 2 3 11 11
-STR                  : 7
-SUPTO                : 28
-TIMES                : 16
-TRUE                 : 23
-WHILE                : 8
+AFFECT               : 18 20
+AND                  : 31
+COMMA                : 4 5
+DIVIDE               : 25
+ELSE                 : 16
+FALSE                : 30
+FONCTION             : 9 10
+FOR                  : 17
+IF                   : 15 16
+INFTO                : 33
+LACOL                : 9 10 14 15 16 16 17
+LPAREN               : 8 9 10 11 12 13 14 15 16 17 26
+MINUS                : 24
+NAME                 : 4 6 9 10 11 12 18 19 20 28
+NUMBER               : 5 7 27
+OR                   : 32
+PLUS                 : 19 19 20 21
+PRINT                : 8
+PRINTSTR             : 13
+RACOL                : 9 10 14 15 16 16 17
+RPAREN               : 8 9 10 11 12 13 14 15 16 17 26
+SAME                 : 23
+SEMICOLON            : 2 3 17 17
+STR                  : 13
+SUPTO                : 34
+TIMES                : 22
+TRUE                 : 29
+WHILE                : 14
 error                : 
 
 Nonterminals, with rules where they appear
 
-BLOC                 : 1 2 5 8 9 10 10 11
+BLOC                 : 1 2 9 10 14 15 16 16 17
+PARAM                : 4 5 10 12
 START                : 0
-expression           : 4 8 9 10 11 12 14 15 15 16 16 17 17 18 18 19 19 20 25 25 26 26 27 27 28 28
-statement            : 2 3 11 11
+expression           : 8 14 15 16 17 18 20 21 21 22 22 23 23 24 24 25 25 26 31 31 32 32 33 33 34 34
+statement            : 2 3 17 17
 
 Parsing method: LALR
 
@@ -78,17 +86,19 @@ state 0
     (1) START -> . BLOC
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
 
     PRINT           shift and go to state 4
     FONCTION        shift and go to state 5
@@ -112,17 +122,19 @@ state 2
 
     (1) START -> BLOC .
     (2) BLOC -> BLOC . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
 
     $end            reduce using rule 1 (START -> BLOC .)
     PRINT           shift and go to state 4
@@ -144,24 +156,26 @@ state 3
 
 state 4
 
-    (4) statement -> PRINT . LPAREN expression RPAREN
+    (8) statement -> PRINT . LPAREN expression RPAREN
 
     LPAREN          shift and go to state 13
 
 
 state 5
 
-    (5) statement -> FONCTION . NAME LPAREN RPAREN LACOL BLOC RACOL
+    (9) statement -> FONCTION . NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> FONCTION . NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
 
     NAME            shift and go to state 14
 
 
 state 6
 
-    (6) statement -> NAME . LPAREN RPAREN
-    (12) statement -> NAME . AFFECT expression
-    (13) statement -> NAME . PLUS PLUS
-    (14) statement -> NAME . PLUS AFFECT expression
+    (11) statement -> NAME . LPAREN RPAREN
+    (12) statement -> NAME . LPAREN PARAM RPAREN
+    (18) statement -> NAME . AFFECT expression
+    (19) statement -> NAME . PLUS PLUS
+    (20) statement -> NAME . PLUS AFFECT expression
 
     LPAREN          shift and go to state 15
     AFFECT          shift and go to state 16
@@ -170,29 +184,29 @@ state 6
 
 state 7
 
-    (7) statement -> PRINTSTR . LPAREN STR RPAREN
+    (13) statement -> PRINTSTR . LPAREN STR RPAREN
 
     LPAREN          shift and go to state 18
 
 
 state 8
 
-    (8) statement -> WHILE . LPAREN expression RPAREN LACOL BLOC RACOL
+    (14) statement -> WHILE . LPAREN expression RPAREN LACOL BLOC RACOL
 
     LPAREN          shift and go to state 19
 
 
 state 9
 
-    (9) statement -> IF . LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> IF . LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (15) statement -> IF . LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> IF . LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
 
     LPAREN          shift and go to state 20
 
 
 state 10
 
-    (11) statement -> FOR . LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (17) statement -> FOR . LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
 
     LPAREN          shift and go to state 21
 
@@ -221,21 +235,21 @@ state 12
 
 state 13
 
-    (4) statement -> PRINT LPAREN . expression RPAREN
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (8) statement -> PRINT LPAREN . expression RPAREN
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -247,35 +261,44 @@ state 13
 
 state 14
 
-    (5) statement -> FONCTION NAME . LPAREN RPAREN LACOL BLOC RACOL
+    (9) statement -> FONCTION NAME . LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> FONCTION NAME . LPAREN PARAM RPAREN LACOL BLOC RACOL
 
     LPAREN          shift and go to state 29
 
 
 state 15
 
-    (6) statement -> NAME LPAREN . RPAREN
+    (11) statement -> NAME LPAREN . RPAREN
+    (12) statement -> NAME LPAREN . PARAM RPAREN
+    (4) PARAM -> . NAME COMMA PARAM
+    (5) PARAM -> . NUMBER COMMA PARAM
+    (6) PARAM -> . NAME
+    (7) PARAM -> . NUMBER
 
-    RPAREN          shift and go to state 30
+    RPAREN          shift and go to state 31
+    NAME            shift and go to state 30
+    NUMBER          shift and go to state 33
 
+    PARAM                          shift and go to state 32
 
 state 16
 
-    (12) statement -> NAME AFFECT . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (18) statement -> NAME AFFECT . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -283,41 +306,41 @@ state 16
     TRUE            shift and go to state 27
     FALSE           shift and go to state 28
 
-    expression                     shift and go to state 31
+    expression                     shift and go to state 34
 
 state 17
 
-    (13) statement -> NAME PLUS . PLUS
-    (14) statement -> NAME PLUS . AFFECT expression
+    (19) statement -> NAME PLUS . PLUS
+    (20) statement -> NAME PLUS . AFFECT expression
 
-    PLUS            shift and go to state 32
-    AFFECT          shift and go to state 33
+    PLUS            shift and go to state 35
+    AFFECT          shift and go to state 36
 
 
 state 18
 
-    (7) statement -> PRINTSTR LPAREN . STR RPAREN
+    (13) statement -> PRINTSTR LPAREN . STR RPAREN
 
-    STR             shift and go to state 34
+    STR             shift and go to state 37
 
 
 state 19
 
-    (8) statement -> WHILE LPAREN . expression RPAREN LACOL BLOC RACOL
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (14) statement -> WHILE LPAREN . expression RPAREN LACOL BLOC RACOL
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -325,26 +348,26 @@ state 19
     TRUE            shift and go to state 27
     FALSE           shift and go to state 28
 
-    expression                     shift and go to state 35
+    expression                     shift and go to state 38
 
 state 20
 
-    (9) statement -> IF LPAREN . expression RPAREN LACOL BLOC RACOL
-    (10) statement -> IF LPAREN . expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (15) statement -> IF LPAREN . expression RPAREN LACOL BLOC RACOL
+    (16) statement -> IF LPAREN . expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -352,22 +375,24 @@ state 20
     TRUE            shift and go to state 27
     FALSE           shift and go to state 28
 
-    expression                     shift and go to state 36
+    expression                     shift and go to state 39
 
 state 21
 
-    (11) statement -> FOR LPAREN . statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (17) statement -> FOR LPAREN . statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
 
     PRINT           shift and go to state 4
     FONCTION        shift and go to state 5
@@ -377,7 +402,7 @@ state 21
     IF              shift and go to state 9
     FOR             shift and go to state 10
 
-    statement                      shift and go to state 37
+    statement                      shift and go to state 40
 
 state 22
 
@@ -396,21 +421,21 @@ state 22
 
 state 23
 
-    (20) expression -> LPAREN . expression RPAREN
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (26) expression -> LPAREN . expression RPAREN
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -418,317 +443,200 @@ state 23
     TRUE            shift and go to state 27
     FALSE           shift and go to state 28
 
-    expression                     shift and go to state 38
+    expression                     shift and go to state 41
 
 state 24
 
-    (4) statement -> PRINT LPAREN expression . RPAREN
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
+    (8) statement -> PRINT LPAREN expression . RPAREN
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    RPAREN          shift and go to state 39
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    SAME            shift and go to state 42
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    AND             shift and go to state 45
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
+    RPAREN          shift and go to state 42
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    SAME            shift and go to state 45
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    AND             shift and go to state 48
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
 
 
 state 25
 
-    (21) expression -> NUMBER .
+    (27) expression -> NUMBER .
 
-    RPAREN          reduce using rule 21 (expression -> NUMBER .)
-    PLUS            reduce using rule 21 (expression -> NUMBER .)
-    TIMES           reduce using rule 21 (expression -> NUMBER .)
-    SAME            reduce using rule 21 (expression -> NUMBER .)
-    MINUS           reduce using rule 21 (expression -> NUMBER .)
-    DIVIDE          reduce using rule 21 (expression -> NUMBER .)
-    AND             reduce using rule 21 (expression -> NUMBER .)
-    OR              reduce using rule 21 (expression -> NUMBER .)
-    INFTO           reduce using rule 21 (expression -> NUMBER .)
-    SUPTO           reduce using rule 21 (expression -> NUMBER .)
-    SEMICOLON       reduce using rule 21 (expression -> NUMBER .)
+    RPAREN          reduce using rule 27 (expression -> NUMBER .)
+    PLUS            reduce using rule 27 (expression -> NUMBER .)
+    TIMES           reduce using rule 27 (expression -> NUMBER .)
+    SAME            reduce using rule 27 (expression -> NUMBER .)
+    MINUS           reduce using rule 27 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 27 (expression -> NUMBER .)
+    AND             reduce using rule 27 (expression -> NUMBER .)
+    OR              reduce using rule 27 (expression -> NUMBER .)
+    INFTO           reduce using rule 27 (expression -> NUMBER .)
+    SUPTO           reduce using rule 27 (expression -> NUMBER .)
+    SEMICOLON       reduce using rule 27 (expression -> NUMBER .)
 
 
 state 26
 
-    (22) expression -> NAME .
+    (28) expression -> NAME .
 
-    RPAREN          reduce using rule 22 (expression -> NAME .)
-    PLUS            reduce using rule 22 (expression -> NAME .)
-    TIMES           reduce using rule 22 (expression -> NAME .)
-    SAME            reduce using rule 22 (expression -> NAME .)
-    MINUS           reduce using rule 22 (expression -> NAME .)
-    DIVIDE          reduce using rule 22 (expression -> NAME .)
-    AND             reduce using rule 22 (expression -> NAME .)
-    OR              reduce using rule 22 (expression -> NAME .)
-    INFTO           reduce using rule 22 (expression -> NAME .)
-    SUPTO           reduce using rule 22 (expression -> NAME .)
-    SEMICOLON       reduce using rule 22 (expression -> NAME .)
+    RPAREN          reduce using rule 28 (expression -> NAME .)
+    PLUS            reduce using rule 28 (expression -> NAME .)
+    TIMES           reduce using rule 28 (expression -> NAME .)
+    SAME            reduce using rule 28 (expression -> NAME .)
+    MINUS           reduce using rule 28 (expression -> NAME .)
+    DIVIDE          reduce using rule 28 (expression -> NAME .)
+    AND             reduce using rule 28 (expression -> NAME .)
+    OR              reduce using rule 28 (expression -> NAME .)
+    INFTO           reduce using rule 28 (expression -> NAME .)
+    SUPTO           reduce using rule 28 (expression -> NAME .)
+    SEMICOLON       reduce using rule 28 (expression -> NAME .)
 
 
 state 27
 
-    (23) expression -> TRUE .
+    (29) expression -> TRUE .
 
-    RPAREN          reduce using rule 23 (expression -> TRUE .)
-    PLUS            reduce using rule 23 (expression -> TRUE .)
-    TIMES           reduce using rule 23 (expression -> TRUE .)
-    SAME            reduce using rule 23 (expression -> TRUE .)
-    MINUS           reduce using rule 23 (expression -> TRUE .)
-    DIVIDE          reduce using rule 23 (expression -> TRUE .)
-    AND             reduce using rule 23 (expression -> TRUE .)
-    OR              reduce using rule 23 (expression -> TRUE .)
-    INFTO           reduce using rule 23 (expression -> TRUE .)
-    SUPTO           reduce using rule 23 (expression -> TRUE .)
-    SEMICOLON       reduce using rule 23 (expression -> TRUE .)
+    RPAREN          reduce using rule 29 (expression -> TRUE .)
+    PLUS            reduce using rule 29 (expression -> TRUE .)
+    TIMES           reduce using rule 29 (expression -> TRUE .)
+    SAME            reduce using rule 29 (expression -> TRUE .)
+    MINUS           reduce using rule 29 (expression -> TRUE .)
+    DIVIDE          reduce using rule 29 (expression -> TRUE .)
+    AND             reduce using rule 29 (expression -> TRUE .)
+    OR              reduce using rule 29 (expression -> TRUE .)
+    INFTO           reduce using rule 29 (expression -> TRUE .)
+    SUPTO           reduce using rule 29 (expression -> TRUE .)
+    SEMICOLON       reduce using rule 29 (expression -> TRUE .)
 
 
 state 28
 
-    (24) expression -> FALSE .
+    (30) expression -> FALSE .
 
-    RPAREN          reduce using rule 24 (expression -> FALSE .)
-    PLUS            reduce using rule 24 (expression -> FALSE .)
-    TIMES           reduce using rule 24 (expression -> FALSE .)
-    SAME            reduce using rule 24 (expression -> FALSE .)
-    MINUS           reduce using rule 24 (expression -> FALSE .)
-    DIVIDE          reduce using rule 24 (expression -> FALSE .)
-    AND             reduce using rule 24 (expression -> FALSE .)
-    OR              reduce using rule 24 (expression -> FALSE .)
-    INFTO           reduce using rule 24 (expression -> FALSE .)
-    SUPTO           reduce using rule 24 (expression -> FALSE .)
-    SEMICOLON       reduce using rule 24 (expression -> FALSE .)
+    RPAREN          reduce using rule 30 (expression -> FALSE .)
+    PLUS            reduce using rule 30 (expression -> FALSE .)
+    TIMES           reduce using rule 30 (expression -> FALSE .)
+    SAME            reduce using rule 30 (expression -> FALSE .)
+    MINUS           reduce using rule 30 (expression -> FALSE .)
+    DIVIDE          reduce using rule 30 (expression -> FALSE .)
+    AND             reduce using rule 30 (expression -> FALSE .)
+    OR              reduce using rule 30 (expression -> FALSE .)
+    INFTO           reduce using rule 30 (expression -> FALSE .)
+    SUPTO           reduce using rule 30 (expression -> FALSE .)
+    SEMICOLON       reduce using rule 30 (expression -> FALSE .)
 
 
 state 29
 
-    (5) statement -> FONCTION NAME LPAREN . RPAREN LACOL BLOC RACOL
+    (9) statement -> FONCTION NAME LPAREN . RPAREN LACOL BLOC RACOL
+    (10) statement -> FONCTION NAME LPAREN . PARAM RPAREN LACOL BLOC RACOL
+    (4) PARAM -> . NAME COMMA PARAM
+    (5) PARAM -> . NUMBER COMMA PARAM
+    (6) PARAM -> . NAME
+    (7) PARAM -> . NUMBER
 
-    RPAREN          shift and go to state 49
+    RPAREN          shift and go to state 52
+    NAME            shift and go to state 30
+    NUMBER          shift and go to state 33
 
+    PARAM                          shift and go to state 53
 
 state 30
 
-    (6) statement -> NAME LPAREN RPAREN .
+    (4) PARAM -> NAME . COMMA PARAM
+    (6) PARAM -> NAME .
 
-    SEMICOLON       reduce using rule 6 (statement -> NAME LPAREN RPAREN .)
-    RPAREN          reduce using rule 6 (statement -> NAME LPAREN RPAREN .)
+    COMMA           shift and go to state 54
+    RPAREN          reduce using rule 6 (PARAM -> NAME .)
 
 
 state 31
 
-    (12) statement -> NAME AFFECT expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
+    (11) statement -> NAME LPAREN RPAREN .
 
-    SEMICOLON       reduce using rule 12 (statement -> NAME AFFECT expression .)
-    RPAREN          reduce using rule 12 (statement -> NAME AFFECT expression .)
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    SAME            shift and go to state 42
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    AND             shift and go to state 45
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
+    SEMICOLON       reduce using rule 11 (statement -> NAME LPAREN RPAREN .)
+    RPAREN          reduce using rule 11 (statement -> NAME LPAREN RPAREN .)
 
 
 state 32
 
-    (13) statement -> NAME PLUS PLUS .
+    (12) statement -> NAME LPAREN PARAM . RPAREN
 
-    SEMICOLON       reduce using rule 13 (statement -> NAME PLUS PLUS .)
-    RPAREN          reduce using rule 13 (statement -> NAME PLUS PLUS .)
+    RPAREN          shift and go to state 55
 
 
 state 33
 
-    (14) statement -> NAME PLUS AFFECT . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (5) PARAM -> NUMBER . COMMA PARAM
+    (7) PARAM -> NUMBER .
 
-    LPAREN          shift and go to state 23
-    NUMBER          shift and go to state 25
-    NAME            shift and go to state 26
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
+    COMMA           shift and go to state 56
+    RPAREN          reduce using rule 7 (PARAM -> NUMBER .)
 
-    expression                     shift and go to state 50
 
 state 34
 
-    (7) statement -> PRINTSTR LPAREN STR . RPAREN
+    (18) statement -> NAME AFFECT expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    RPAREN          shift and go to state 51
+    SEMICOLON       reduce using rule 18 (statement -> NAME AFFECT expression .)
+    RPAREN          reduce using rule 18 (statement -> NAME AFFECT expression .)
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    SAME            shift and go to state 45
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    AND             shift and go to state 48
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
 
 
 state 35
 
-    (8) statement -> WHILE LPAREN expression . RPAREN LACOL BLOC RACOL
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
+    (19) statement -> NAME PLUS PLUS .
 
-    RPAREN          shift and go to state 52
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    SAME            shift and go to state 42
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    AND             shift and go to state 45
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
+    SEMICOLON       reduce using rule 19 (statement -> NAME PLUS PLUS .)
+    RPAREN          reduce using rule 19 (statement -> NAME PLUS PLUS .)
 
 
 state 36
 
-    (9) statement -> IF LPAREN expression . RPAREN LACOL BLOC RACOL
-    (10) statement -> IF LPAREN expression . RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
-
-    RPAREN          shift and go to state 53
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    SAME            shift and go to state 42
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    AND             shift and go to state 45
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
-
-
-state 37
-
-    (11) statement -> FOR LPAREN statement . SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-
-    SEMICOLON       shift and go to state 54
-
-
-state 38
-
-    (20) expression -> LPAREN expression . RPAREN
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
-
-    RPAREN          shift and go to state 55
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    SAME            shift and go to state 42
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    AND             shift and go to state 45
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
-
-
-state 39
-
-    (4) statement -> PRINT LPAREN expression RPAREN .
-
-    SEMICOLON       reduce using rule 4 (statement -> PRINT LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 4 (statement -> PRINT LPAREN expression RPAREN .)
-
-
-state 40
-
-    (15) expression -> expression PLUS . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 23
-    NUMBER          shift and go to state 25
-    NAME            shift and go to state 26
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-
-    expression                     shift and go to state 56
-
-state 41
-
-    (16) expression -> expression TIMES . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (20) statement -> NAME PLUS AFFECT . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -738,153 +646,121 @@ state 41
 
     expression                     shift and go to state 57
 
+state 37
+
+    (13) statement -> PRINTSTR LPAREN STR . RPAREN
+
+    RPAREN          shift and go to state 58
+
+
+state 38
+
+    (14) statement -> WHILE LPAREN expression . RPAREN LACOL BLOC RACOL
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
+
+    RPAREN          shift and go to state 59
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    SAME            shift and go to state 45
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    AND             shift and go to state 48
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
+
+
+state 39
+
+    (15) statement -> IF LPAREN expression . RPAREN LACOL BLOC RACOL
+    (16) statement -> IF LPAREN expression . RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
+
+    RPAREN          shift and go to state 60
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    SAME            shift and go to state 45
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    AND             shift and go to state 48
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
+
+
+state 40
+
+    (17) statement -> FOR LPAREN statement . SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+
+    SEMICOLON       shift and go to state 61
+
+
+state 41
+
+    (26) expression -> LPAREN expression . RPAREN
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
+
+    RPAREN          shift and go to state 62
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    SAME            shift and go to state 45
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    AND             shift and go to state 48
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
+
+
 state 42
 
-    (17) expression -> expression SAME . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (8) statement -> PRINT LPAREN expression RPAREN .
 
-    LPAREN          shift and go to state 23
-    NUMBER          shift and go to state 25
-    NAME            shift and go to state 26
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
+    SEMICOLON       reduce using rule 8 (statement -> PRINT LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 8 (statement -> PRINT LPAREN expression RPAREN .)
 
-    expression                     shift and go to state 58
 
 state 43
 
-    (18) expression -> expression MINUS . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 23
-    NUMBER          shift and go to state 25
-    NAME            shift and go to state 26
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-
-    expression                     shift and go to state 59
-
-state 44
-
-    (19) expression -> expression DIVIDE . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 23
-    NUMBER          shift and go to state 25
-    NAME            shift and go to state 26
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-
-    expression                     shift and go to state 60
-
-state 45
-
-    (25) expression -> expression AND . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 23
-    NUMBER          shift and go to state 25
-    NAME            shift and go to state 26
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-
-    expression                     shift and go to state 61
-
-state 46
-
-    (26) expression -> expression OR . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
-
-    LPAREN          shift and go to state 23
-    NUMBER          shift and go to state 25
-    NAME            shift and go to state 26
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-
-    expression                     shift and go to state 62
-
-state 47
-
-    (27) expression -> expression INFTO . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (21) expression -> expression PLUS . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -894,23 +770,23 @@ state 47
 
     expression                     shift and go to state 63
 
-state 48
+state 44
 
-    (28) expression -> expression SUPTO . expression
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (22) expression -> expression TIMES . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -920,79 +796,101 @@ state 48
 
     expression                     shift and go to state 64
 
-state 49
+state 45
 
-    (5) statement -> FONCTION NAME LPAREN RPAREN . LACOL BLOC RACOL
+    (23) expression -> expression SAME . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
-    LACOL           shift and go to state 65
+    LPAREN          shift and go to state 23
+    NUMBER          shift and go to state 25
+    NAME            shift and go to state 26
+    TRUE            shift and go to state 27
+    FALSE           shift and go to state 28
 
+    expression                     shift and go to state 65
 
-state 50
+state 46
 
-    (14) statement -> NAME PLUS AFFECT expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
+    (24) expression -> expression MINUS . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
-    SEMICOLON       reduce using rule 14 (statement -> NAME PLUS AFFECT expression .)
-    RPAREN          reduce using rule 14 (statement -> NAME PLUS AFFECT expression .)
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    SAME            shift and go to state 42
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    AND             shift and go to state 45
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
+    LPAREN          shift and go to state 23
+    NUMBER          shift and go to state 25
+    NAME            shift and go to state 26
+    TRUE            shift and go to state 27
+    FALSE           shift and go to state 28
 
+    expression                     shift and go to state 66
 
-state 51
+state 47
 
-    (7) statement -> PRINTSTR LPAREN STR RPAREN .
+    (25) expression -> expression DIVIDE . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
-    SEMICOLON       reduce using rule 7 (statement -> PRINTSTR LPAREN STR RPAREN .)
-    RPAREN          reduce using rule 7 (statement -> PRINTSTR LPAREN STR RPAREN .)
+    LPAREN          shift and go to state 23
+    NUMBER          shift and go to state 25
+    NAME            shift and go to state 26
+    TRUE            shift and go to state 27
+    FALSE           shift and go to state 28
 
+    expression                     shift and go to state 67
 
-state 52
+state 48
 
-    (8) statement -> WHILE LPAREN expression RPAREN . LACOL BLOC RACOL
-
-    LACOL           shift and go to state 66
-
-
-state 53
-
-    (9) statement -> IF LPAREN expression RPAREN . LACOL BLOC RACOL
-    (10) statement -> IF LPAREN expression RPAREN . LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-
-    LACOL           shift and go to state 67
-
-
-state 54
-
-    (11) statement -> FOR LPAREN statement SEMICOLON . expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression TIMES expression
-    (17) expression -> . expression SAME expression
-    (18) expression -> . expression MINUS expression
-    (19) expression -> . expression DIVIDE expression
-    (20) expression -> . LPAREN expression RPAREN
-    (21) expression -> . NUMBER
-    (22) expression -> . NAME
-    (23) expression -> . TRUE
-    (24) expression -> . FALSE
-    (25) expression -> . expression AND expression
-    (26) expression -> . expression OR expression
-    (27) expression -> . expression INFTO expression
-    (28) expression -> . expression SUPTO expression
+    (31) expression -> expression AND . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
 
     LPAREN          shift and go to state 23
     NUMBER          shift and go to state 25
@@ -1002,107 +900,308 @@ state 54
 
     expression                     shift and go to state 68
 
+state 49
+
+    (32) expression -> expression OR . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
+
+    LPAREN          shift and go to state 23
+    NUMBER          shift and go to state 25
+    NAME            shift and go to state 26
+    TRUE            shift and go to state 27
+    FALSE           shift and go to state 28
+
+    expression                     shift and go to state 69
+
+state 50
+
+    (33) expression -> expression INFTO . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
+
+    LPAREN          shift and go to state 23
+    NUMBER          shift and go to state 25
+    NAME            shift and go to state 26
+    TRUE            shift and go to state 27
+    FALSE           shift and go to state 28
+
+    expression                     shift and go to state 70
+
+state 51
+
+    (34) expression -> expression SUPTO . expression
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
+
+    LPAREN          shift and go to state 23
+    NUMBER          shift and go to state 25
+    NAME            shift and go to state 26
+    TRUE            shift and go to state 27
+    FALSE           shift and go to state 28
+
+    expression                     shift and go to state 71
+
+state 52
+
+    (9) statement -> FONCTION NAME LPAREN RPAREN . LACOL BLOC RACOL
+
+    LACOL           shift and go to state 72
+
+
+state 53
+
+    (10) statement -> FONCTION NAME LPAREN PARAM . RPAREN LACOL BLOC RACOL
+
+    RPAREN          shift and go to state 73
+
+
+state 54
+
+    (4) PARAM -> NAME COMMA . PARAM
+    (4) PARAM -> . NAME COMMA PARAM
+    (5) PARAM -> . NUMBER COMMA PARAM
+    (6) PARAM -> . NAME
+    (7) PARAM -> . NUMBER
+
+    NAME            shift and go to state 30
+    NUMBER          shift and go to state 33
+
+    PARAM                          shift and go to state 74
+
 state 55
 
-    (20) expression -> LPAREN expression RPAREN .
+    (12) statement -> NAME LPAREN PARAM RPAREN .
 
-    RPAREN          reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    TIMES           reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    SAME            reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    AND             reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    OR              reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    INFTO           reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    SUPTO           reduce using rule 20 (expression -> LPAREN expression RPAREN .)
-    SEMICOLON       reduce using rule 20 (expression -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 12 (statement -> NAME LPAREN PARAM RPAREN .)
+    RPAREN          reduce using rule 12 (statement -> NAME LPAREN PARAM RPAREN .)
 
 
 state 56
 
-    (15) expression -> expression PLUS expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
+    (5) PARAM -> NUMBER COMMA . PARAM
+    (4) PARAM -> . NAME COMMA PARAM
+    (5) PARAM -> . NUMBER COMMA PARAM
+    (6) PARAM -> . NAME
+    (7) PARAM -> . NUMBER
 
-    RPAREN          reduce using rule 15 (expression -> expression PLUS expression .)
-    PLUS            reduce using rule 15 (expression -> expression PLUS expression .)
-    SAME            reduce using rule 15 (expression -> expression PLUS expression .)
-    MINUS           reduce using rule 15 (expression -> expression PLUS expression .)
-    AND             reduce using rule 15 (expression -> expression PLUS expression .)
-    OR              reduce using rule 15 (expression -> expression PLUS expression .)
-    INFTO           reduce using rule 15 (expression -> expression PLUS expression .)
-    SUPTO           reduce using rule 15 (expression -> expression PLUS expression .)
-    SEMICOLON       reduce using rule 15 (expression -> expression PLUS expression .)
-    TIMES           shift and go to state 41
-    DIVIDE          shift and go to state 44
+    NAME            shift and go to state 30
+    NUMBER          shift and go to state 33
 
-  ! TIMES           [ reduce using rule 15 (expression -> expression PLUS expression .) ]
-  ! DIVIDE          [ reduce using rule 15 (expression -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 40 ]
-  ! SAME            [ shift and go to state 42 ]
-  ! MINUS           [ shift and go to state 43 ]
-  ! AND             [ shift and go to state 45 ]
-  ! OR              [ shift and go to state 46 ]
-  ! INFTO           [ shift and go to state 47 ]
-  ! SUPTO           [ shift and go to state 48 ]
-
+    PARAM                          shift and go to state 75
 
 state 57
 
-    (16) expression -> expression TIMES expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
+    (20) statement -> NAME PLUS AFFECT expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    RPAREN          reduce using rule 16 (expression -> expression TIMES expression .)
-    PLUS            reduce using rule 16 (expression -> expression TIMES expression .)
-    TIMES           reduce using rule 16 (expression -> expression TIMES expression .)
-    SAME            reduce using rule 16 (expression -> expression TIMES expression .)
-    MINUS           reduce using rule 16 (expression -> expression TIMES expression .)
-    DIVIDE          reduce using rule 16 (expression -> expression TIMES expression .)
-    AND             reduce using rule 16 (expression -> expression TIMES expression .)
-    OR              reduce using rule 16 (expression -> expression TIMES expression .)
-    INFTO           reduce using rule 16 (expression -> expression TIMES expression .)
-    SUPTO           reduce using rule 16 (expression -> expression TIMES expression .)
-    SEMICOLON       reduce using rule 16 (expression -> expression TIMES expression .)
-
-  ! PLUS            [ shift and go to state 40 ]
-  ! TIMES           [ shift and go to state 41 ]
-  ! SAME            [ shift and go to state 42 ]
-  ! MINUS           [ shift and go to state 43 ]
-  ! DIVIDE          [ shift and go to state 44 ]
-  ! AND             [ shift and go to state 45 ]
-  ! OR              [ shift and go to state 46 ]
-  ! INFTO           [ shift and go to state 47 ]
-  ! SUPTO           [ shift and go to state 48 ]
+    SEMICOLON       reduce using rule 20 (statement -> NAME PLUS AFFECT expression .)
+    RPAREN          reduce using rule 20 (statement -> NAME PLUS AFFECT expression .)
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    SAME            shift and go to state 45
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    AND             shift and go to state 48
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
 
 
 state 58
 
-    (17) expression -> expression SAME expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
+    (13) statement -> PRINTSTR LPAREN STR RPAREN .
+
+    SEMICOLON       reduce using rule 13 (statement -> PRINTSTR LPAREN STR RPAREN .)
+    RPAREN          reduce using rule 13 (statement -> PRINTSTR LPAREN STR RPAREN .)
+
+
+state 59
+
+    (14) statement -> WHILE LPAREN expression RPAREN . LACOL BLOC RACOL
+
+    LACOL           shift and go to state 76
+
+
+state 60
+
+    (15) statement -> IF LPAREN expression RPAREN . LACOL BLOC RACOL
+    (16) statement -> IF LPAREN expression RPAREN . LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+
+    LACOL           shift and go to state 77
+
+
+state 61
+
+    (17) statement -> FOR LPAREN statement SEMICOLON . expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (21) expression -> . expression PLUS expression
+    (22) expression -> . expression TIMES expression
+    (23) expression -> . expression SAME expression
+    (24) expression -> . expression MINUS expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . LPAREN expression RPAREN
+    (27) expression -> . NUMBER
+    (28) expression -> . NAME
+    (29) expression -> . TRUE
+    (30) expression -> . FALSE
+    (31) expression -> . expression AND expression
+    (32) expression -> . expression OR expression
+    (33) expression -> . expression INFTO expression
+    (34) expression -> . expression SUPTO expression
+
+    LPAREN          shift and go to state 23
+    NUMBER          shift and go to state 25
+    NAME            shift and go to state 26
+    TRUE            shift and go to state 27
+    FALSE           shift and go to state 28
+
+    expression                     shift and go to state 78
+
+state 62
+
+    (26) expression -> LPAREN expression RPAREN .
+
+    RPAREN          reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    SAME            reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    AND             reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    OR              reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    INFTO           reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    SUPTO           reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 26 (expression -> LPAREN expression RPAREN .)
+
+
+state 63
+
+    (21) expression -> expression PLUS expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
+
+    RPAREN          reduce using rule 21 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 21 (expression -> expression PLUS expression .)
+    SAME            reduce using rule 21 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 21 (expression -> expression PLUS expression .)
+    AND             reduce using rule 21 (expression -> expression PLUS expression .)
+    OR              reduce using rule 21 (expression -> expression PLUS expression .)
+    INFTO           reduce using rule 21 (expression -> expression PLUS expression .)
+    SUPTO           reduce using rule 21 (expression -> expression PLUS expression .)
+    SEMICOLON       reduce using rule 21 (expression -> expression PLUS expression .)
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 47
+
+  ! TIMES           [ reduce using rule 21 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 21 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 43 ]
+  ! SAME            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 46 ]
+  ! AND             [ shift and go to state 48 ]
+  ! OR              [ shift and go to state 49 ]
+  ! INFTO           [ shift and go to state 50 ]
+  ! SUPTO           [ shift and go to state 51 ]
+
+
+state 64
+
+    (22) expression -> expression TIMES expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
+
+    RPAREN          reduce using rule 22 (expression -> expression TIMES expression .)
+    PLUS            reduce using rule 22 (expression -> expression TIMES expression .)
+    TIMES           reduce using rule 22 (expression -> expression TIMES expression .)
+    SAME            reduce using rule 22 (expression -> expression TIMES expression .)
+    MINUS           reduce using rule 22 (expression -> expression TIMES expression .)
+    DIVIDE          reduce using rule 22 (expression -> expression TIMES expression .)
+    AND             reduce using rule 22 (expression -> expression TIMES expression .)
+    OR              reduce using rule 22 (expression -> expression TIMES expression .)
+    INFTO           reduce using rule 22 (expression -> expression TIMES expression .)
+    SUPTO           reduce using rule 22 (expression -> expression TIMES expression .)
+    SEMICOLON       reduce using rule 22 (expression -> expression TIMES expression .)
+
+  ! PLUS            [ shift and go to state 43 ]
+  ! TIMES           [ shift and go to state 44 ]
+  ! SAME            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 46 ]
+  ! DIVIDE          [ shift and go to state 47 ]
+  ! AND             [ shift and go to state 48 ]
+  ! OR              [ shift and go to state 49 ]
+  ! INFTO           [ shift and go to state 50 ]
+  ! SUPTO           [ shift and go to state 51 ]
+
+
+state 65
+
+    (23) expression -> expression SAME expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for TIMES resolved as shift
@@ -1113,451 +1212,263 @@ state 58
   ! shift/reduce conflict for OR resolved as shift
   ! shift/reduce conflict for INFTO resolved as shift
   ! shift/reduce conflict for SUPTO resolved as shift
-    RPAREN          reduce using rule 17 (expression -> expression SAME expression .)
-    SEMICOLON       reduce using rule 17 (expression -> expression SAME expression .)
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    SAME            shift and go to state 42
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    AND             shift and go to state 45
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
+    RPAREN          reduce using rule 23 (expression -> expression SAME expression .)
+    SEMICOLON       reduce using rule 23 (expression -> expression SAME expression .)
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    SAME            shift and go to state 45
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    AND             shift and go to state 48
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
 
-  ! PLUS            [ reduce using rule 17 (expression -> expression SAME expression .) ]
-  ! TIMES           [ reduce using rule 17 (expression -> expression SAME expression .) ]
-  ! SAME            [ reduce using rule 17 (expression -> expression SAME expression .) ]
-  ! MINUS           [ reduce using rule 17 (expression -> expression SAME expression .) ]
-  ! DIVIDE          [ reduce using rule 17 (expression -> expression SAME expression .) ]
-  ! AND             [ reduce using rule 17 (expression -> expression SAME expression .) ]
-  ! OR              [ reduce using rule 17 (expression -> expression SAME expression .) ]
-  ! INFTO           [ reduce using rule 17 (expression -> expression SAME expression .) ]
-  ! SUPTO           [ reduce using rule 17 (expression -> expression SAME expression .) ]
+  ! PLUS            [ reduce using rule 23 (expression -> expression SAME expression .) ]
+  ! TIMES           [ reduce using rule 23 (expression -> expression SAME expression .) ]
+  ! SAME            [ reduce using rule 23 (expression -> expression SAME expression .) ]
+  ! MINUS           [ reduce using rule 23 (expression -> expression SAME expression .) ]
+  ! DIVIDE          [ reduce using rule 23 (expression -> expression SAME expression .) ]
+  ! AND             [ reduce using rule 23 (expression -> expression SAME expression .) ]
+  ! OR              [ reduce using rule 23 (expression -> expression SAME expression .) ]
+  ! INFTO           [ reduce using rule 23 (expression -> expression SAME expression .) ]
+  ! SUPTO           [ reduce using rule 23 (expression -> expression SAME expression .) ]
 
-
-state 59
-
-    (18) expression -> expression MINUS expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
-
-    RPAREN          reduce using rule 18 (expression -> expression MINUS expression .)
-    PLUS            reduce using rule 18 (expression -> expression MINUS expression .)
-    SAME            reduce using rule 18 (expression -> expression MINUS expression .)
-    MINUS           reduce using rule 18 (expression -> expression MINUS expression .)
-    AND             reduce using rule 18 (expression -> expression MINUS expression .)
-    OR              reduce using rule 18 (expression -> expression MINUS expression .)
-    INFTO           reduce using rule 18 (expression -> expression MINUS expression .)
-    SUPTO           reduce using rule 18 (expression -> expression MINUS expression .)
-    SEMICOLON       reduce using rule 18 (expression -> expression MINUS expression .)
-    TIMES           shift and go to state 41
-    DIVIDE          shift and go to state 44
-
-  ! TIMES           [ reduce using rule 18 (expression -> expression MINUS expression .) ]
-  ! DIVIDE          [ reduce using rule 18 (expression -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 40 ]
-  ! SAME            [ shift and go to state 42 ]
-  ! MINUS           [ shift and go to state 43 ]
-  ! AND             [ shift and go to state 45 ]
-  ! OR              [ shift and go to state 46 ]
-  ! INFTO           [ shift and go to state 47 ]
-  ! SUPTO           [ shift and go to state 48 ]
-
-
-state 60
-
-    (19) expression -> expression DIVIDE expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
-
-    RPAREN          reduce using rule 19 (expression -> expression DIVIDE expression .)
-    PLUS            reduce using rule 19 (expression -> expression DIVIDE expression .)
-    TIMES           reduce using rule 19 (expression -> expression DIVIDE expression .)
-    SAME            reduce using rule 19 (expression -> expression DIVIDE expression .)
-    MINUS           reduce using rule 19 (expression -> expression DIVIDE expression .)
-    DIVIDE          reduce using rule 19 (expression -> expression DIVIDE expression .)
-    AND             reduce using rule 19 (expression -> expression DIVIDE expression .)
-    OR              reduce using rule 19 (expression -> expression DIVIDE expression .)
-    INFTO           reduce using rule 19 (expression -> expression DIVIDE expression .)
-    SUPTO           reduce using rule 19 (expression -> expression DIVIDE expression .)
-    SEMICOLON       reduce using rule 19 (expression -> expression DIVIDE expression .)
-
-  ! PLUS            [ shift and go to state 40 ]
-  ! TIMES           [ shift and go to state 41 ]
-  ! SAME            [ shift and go to state 42 ]
-  ! MINUS           [ shift and go to state 43 ]
-  ! DIVIDE          [ shift and go to state 44 ]
-  ! AND             [ shift and go to state 45 ]
-  ! OR              [ shift and go to state 46 ]
-  ! INFTO           [ shift and go to state 47 ]
-  ! SUPTO           [ shift and go to state 48 ]
-
-
-state 61
-
-    (25) expression -> expression AND expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
-
-    RPAREN          reduce using rule 25 (expression -> expression AND expression .)
-    SAME            reduce using rule 25 (expression -> expression AND expression .)
-    AND             reduce using rule 25 (expression -> expression AND expression .)
-    SEMICOLON       reduce using rule 25 (expression -> expression AND expression .)
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
-
-  ! PLUS            [ reduce using rule 25 (expression -> expression AND expression .) ]
-  ! TIMES           [ reduce using rule 25 (expression -> expression AND expression .) ]
-  ! MINUS           [ reduce using rule 25 (expression -> expression AND expression .) ]
-  ! DIVIDE          [ reduce using rule 25 (expression -> expression AND expression .) ]
-  ! OR              [ reduce using rule 25 (expression -> expression AND expression .) ]
-  ! INFTO           [ reduce using rule 25 (expression -> expression AND expression .) ]
-  ! SUPTO           [ reduce using rule 25 (expression -> expression AND expression .) ]
-  ! SAME            [ shift and go to state 42 ]
-  ! AND             [ shift and go to state 45 ]
-
-
-state 62
-
-    (26) expression -> expression OR expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
-
-    RPAREN          reduce using rule 26 (expression -> expression OR expression .)
-    SAME            reduce using rule 26 (expression -> expression OR expression .)
-    AND             reduce using rule 26 (expression -> expression OR expression .)
-    OR              reduce using rule 26 (expression -> expression OR expression .)
-    SEMICOLON       reduce using rule 26 (expression -> expression OR expression .)
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
-
-  ! PLUS            [ reduce using rule 26 (expression -> expression OR expression .) ]
-  ! TIMES           [ reduce using rule 26 (expression -> expression OR expression .) ]
-  ! MINUS           [ reduce using rule 26 (expression -> expression OR expression .) ]
-  ! DIVIDE          [ reduce using rule 26 (expression -> expression OR expression .) ]
-  ! INFTO           [ reduce using rule 26 (expression -> expression OR expression .) ]
-  ! SUPTO           [ reduce using rule 26 (expression -> expression OR expression .) ]
-  ! SAME            [ shift and go to state 42 ]
-  ! AND             [ shift and go to state 45 ]
-  ! OR              [ shift and go to state 46 ]
-
-
-state 63
-
-    (27) expression -> expression INFTO expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
-
-    RPAREN          reduce using rule 27 (expression -> expression INFTO expression .)
-    SAME            reduce using rule 27 (expression -> expression INFTO expression .)
-    AND             reduce using rule 27 (expression -> expression INFTO expression .)
-    OR              reduce using rule 27 (expression -> expression INFTO expression .)
-    INFTO           reduce using rule 27 (expression -> expression INFTO expression .)
-    SUPTO           reduce using rule 27 (expression -> expression INFTO expression .)
-    SEMICOLON       reduce using rule 27 (expression -> expression INFTO expression .)
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-
-  ! PLUS            [ reduce using rule 27 (expression -> expression INFTO expression .) ]
-  ! TIMES           [ reduce using rule 27 (expression -> expression INFTO expression .) ]
-  ! MINUS           [ reduce using rule 27 (expression -> expression INFTO expression .) ]
-  ! DIVIDE          [ reduce using rule 27 (expression -> expression INFTO expression .) ]
-  ! SAME            [ shift and go to state 42 ]
-  ! AND             [ shift and go to state 45 ]
-  ! OR              [ shift and go to state 46 ]
-  ! INFTO           [ shift and go to state 47 ]
-  ! SUPTO           [ shift and go to state 48 ]
-
-
-state 64
-
-    (28) expression -> expression SUPTO expression .
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
-
-    RPAREN          reduce using rule 28 (expression -> expression SUPTO expression .)
-    SAME            reduce using rule 28 (expression -> expression SUPTO expression .)
-    AND             reduce using rule 28 (expression -> expression SUPTO expression .)
-    OR              reduce using rule 28 (expression -> expression SUPTO expression .)
-    INFTO           reduce using rule 28 (expression -> expression SUPTO expression .)
-    SUPTO           reduce using rule 28 (expression -> expression SUPTO expression .)
-    SEMICOLON       reduce using rule 28 (expression -> expression SUPTO expression .)
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-
-  ! PLUS            [ reduce using rule 28 (expression -> expression SUPTO expression .) ]
-  ! TIMES           [ reduce using rule 28 (expression -> expression SUPTO expression .) ]
-  ! MINUS           [ reduce using rule 28 (expression -> expression SUPTO expression .) ]
-  ! DIVIDE          [ reduce using rule 28 (expression -> expression SUPTO expression .) ]
-  ! SAME            [ shift and go to state 42 ]
-  ! AND             [ shift and go to state 45 ]
-  ! OR              [ shift and go to state 46 ]
-  ! INFTO           [ shift and go to state 47 ]
-  ! SUPTO           [ shift and go to state 48 ]
-
-
-state 65
-
-    (5) statement -> FONCTION NAME LPAREN RPAREN LACOL . BLOC RACOL
-    (2) BLOC -> . BLOC statement SEMICOLON
-    (3) BLOC -> . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
-
-    PRINT           shift and go to state 4
-    FONCTION        shift and go to state 5
-    NAME            shift and go to state 6
-    PRINTSTR        shift and go to state 7
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    FOR             shift and go to state 10
-
-    BLOC                           shift and go to state 69
-    statement                      shift and go to state 3
 
 state 66
 
-    (8) statement -> WHILE LPAREN expression RPAREN LACOL . BLOC RACOL
-    (2) BLOC -> . BLOC statement SEMICOLON
-    (3) BLOC -> . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (24) expression -> expression MINUS expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    PRINT           shift and go to state 4
-    FONCTION        shift and go to state 5
-    NAME            shift and go to state 6
-    PRINTSTR        shift and go to state 7
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    FOR             shift and go to state 10
+    RPAREN          reduce using rule 24 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 24 (expression -> expression MINUS expression .)
+    SAME            reduce using rule 24 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 24 (expression -> expression MINUS expression .)
+    AND             reduce using rule 24 (expression -> expression MINUS expression .)
+    OR              reduce using rule 24 (expression -> expression MINUS expression .)
+    INFTO           reduce using rule 24 (expression -> expression MINUS expression .)
+    SUPTO           reduce using rule 24 (expression -> expression MINUS expression .)
+    SEMICOLON       reduce using rule 24 (expression -> expression MINUS expression .)
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 47
 
-    BLOC                           shift and go to state 70
-    statement                      shift and go to state 3
+  ! TIMES           [ reduce using rule 24 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 24 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 43 ]
+  ! SAME            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 46 ]
+  ! AND             [ shift and go to state 48 ]
+  ! OR              [ shift and go to state 49 ]
+  ! INFTO           [ shift and go to state 50 ]
+  ! SUPTO           [ shift and go to state 51 ]
+
 
 state 67
 
-    (9) statement -> IF LPAREN expression RPAREN LACOL . BLOC RACOL
-    (10) statement -> IF LPAREN expression RPAREN LACOL . BLOC RACOL ELSE LACOL BLOC RACOL
-    (2) BLOC -> . BLOC statement SEMICOLON
-    (3) BLOC -> . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (25) expression -> expression DIVIDE expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    PRINT           shift and go to state 4
-    FONCTION        shift and go to state 5
-    NAME            shift and go to state 6
-    PRINTSTR        shift and go to state 7
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    FOR             shift and go to state 10
+    RPAREN          reduce using rule 25 (expression -> expression DIVIDE expression .)
+    PLUS            reduce using rule 25 (expression -> expression DIVIDE expression .)
+    TIMES           reduce using rule 25 (expression -> expression DIVIDE expression .)
+    SAME            reduce using rule 25 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 25 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 25 (expression -> expression DIVIDE expression .)
+    AND             reduce using rule 25 (expression -> expression DIVIDE expression .)
+    OR              reduce using rule 25 (expression -> expression DIVIDE expression .)
+    INFTO           reduce using rule 25 (expression -> expression DIVIDE expression .)
+    SUPTO           reduce using rule 25 (expression -> expression DIVIDE expression .)
+    SEMICOLON       reduce using rule 25 (expression -> expression DIVIDE expression .)
 
-    BLOC                           shift and go to state 71
-    statement                      shift and go to state 3
+  ! PLUS            [ shift and go to state 43 ]
+  ! TIMES           [ shift and go to state 44 ]
+  ! SAME            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 46 ]
+  ! DIVIDE          [ shift and go to state 47 ]
+  ! AND             [ shift and go to state 48 ]
+  ! OR              [ shift and go to state 49 ]
+  ! INFTO           [ shift and go to state 50 ]
+  ! SUPTO           [ shift and go to state 51 ]
+
 
 state 68
 
-    (11) statement -> FOR LPAREN statement SEMICOLON expression . SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . TIMES expression
-    (17) expression -> expression . SAME expression
-    (18) expression -> expression . MINUS expression
-    (19) expression -> expression . DIVIDE expression
-    (25) expression -> expression . AND expression
-    (26) expression -> expression . OR expression
-    (27) expression -> expression . INFTO expression
-    (28) expression -> expression . SUPTO expression
+    (31) expression -> expression AND expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    SEMICOLON       shift and go to state 72
-    PLUS            shift and go to state 40
-    TIMES           shift and go to state 41
-    SAME            shift and go to state 42
-    MINUS           shift and go to state 43
-    DIVIDE          shift and go to state 44
-    AND             shift and go to state 45
-    OR              shift and go to state 46
-    INFTO           shift and go to state 47
-    SUPTO           shift and go to state 48
+    RPAREN          reduce using rule 31 (expression -> expression AND expression .)
+    SAME            reduce using rule 31 (expression -> expression AND expression .)
+    AND             reduce using rule 31 (expression -> expression AND expression .)
+    SEMICOLON       reduce using rule 31 (expression -> expression AND expression .)
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
+
+  ! PLUS            [ reduce using rule 31 (expression -> expression AND expression .) ]
+  ! TIMES           [ reduce using rule 31 (expression -> expression AND expression .) ]
+  ! MINUS           [ reduce using rule 31 (expression -> expression AND expression .) ]
+  ! DIVIDE          [ reduce using rule 31 (expression -> expression AND expression .) ]
+  ! OR              [ reduce using rule 31 (expression -> expression AND expression .) ]
+  ! INFTO           [ reduce using rule 31 (expression -> expression AND expression .) ]
+  ! SUPTO           [ reduce using rule 31 (expression -> expression AND expression .) ]
+  ! SAME            [ shift and go to state 45 ]
+  ! AND             [ shift and go to state 48 ]
 
 
 state 69
 
-    (5) statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC . RACOL
-    (2) BLOC -> BLOC . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (32) expression -> expression OR expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    RACOL           shift and go to state 73
-    PRINT           shift and go to state 4
-    FONCTION        shift and go to state 5
-    NAME            shift and go to state 6
-    PRINTSTR        shift and go to state 7
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    FOR             shift and go to state 10
+    RPAREN          reduce using rule 32 (expression -> expression OR expression .)
+    SAME            reduce using rule 32 (expression -> expression OR expression .)
+    AND             reduce using rule 32 (expression -> expression OR expression .)
+    OR              reduce using rule 32 (expression -> expression OR expression .)
+    SEMICOLON       reduce using rule 32 (expression -> expression OR expression .)
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
 
-    statement                      shift and go to state 11
+  ! PLUS            [ reduce using rule 32 (expression -> expression OR expression .) ]
+  ! TIMES           [ reduce using rule 32 (expression -> expression OR expression .) ]
+  ! MINUS           [ reduce using rule 32 (expression -> expression OR expression .) ]
+  ! DIVIDE          [ reduce using rule 32 (expression -> expression OR expression .) ]
+  ! INFTO           [ reduce using rule 32 (expression -> expression OR expression .) ]
+  ! SUPTO           [ reduce using rule 32 (expression -> expression OR expression .) ]
+  ! SAME            [ shift and go to state 45 ]
+  ! AND             [ shift and go to state 48 ]
+  ! OR              [ shift and go to state 49 ]
+
 
 state 70
 
-    (8) statement -> WHILE LPAREN expression RPAREN LACOL BLOC . RACOL
-    (2) BLOC -> BLOC . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (33) expression -> expression INFTO expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    RACOL           shift and go to state 74
-    PRINT           shift and go to state 4
-    FONCTION        shift and go to state 5
-    NAME            shift and go to state 6
-    PRINTSTR        shift and go to state 7
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    FOR             shift and go to state 10
+    RPAREN          reduce using rule 33 (expression -> expression INFTO expression .)
+    SAME            reduce using rule 33 (expression -> expression INFTO expression .)
+    AND             reduce using rule 33 (expression -> expression INFTO expression .)
+    OR              reduce using rule 33 (expression -> expression INFTO expression .)
+    INFTO           reduce using rule 33 (expression -> expression INFTO expression .)
+    SUPTO           reduce using rule 33 (expression -> expression INFTO expression .)
+    SEMICOLON       reduce using rule 33 (expression -> expression INFTO expression .)
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
 
-    statement                      shift and go to state 11
+  ! PLUS            [ reduce using rule 33 (expression -> expression INFTO expression .) ]
+  ! TIMES           [ reduce using rule 33 (expression -> expression INFTO expression .) ]
+  ! MINUS           [ reduce using rule 33 (expression -> expression INFTO expression .) ]
+  ! DIVIDE          [ reduce using rule 33 (expression -> expression INFTO expression .) ]
+  ! SAME            [ shift and go to state 45 ]
+  ! AND             [ shift and go to state 48 ]
+  ! OR              [ shift and go to state 49 ]
+  ! INFTO           [ shift and go to state 50 ]
+  ! SUPTO           [ shift and go to state 51 ]
+
 
 state 71
 
-    (9) statement -> IF LPAREN expression RPAREN LACOL BLOC . RACOL
-    (10) statement -> IF LPAREN expression RPAREN LACOL BLOC . RACOL ELSE LACOL BLOC RACOL
-    (2) BLOC -> BLOC . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (34) expression -> expression SUPTO expression .
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
 
-    RACOL           shift and go to state 75
-    PRINT           shift and go to state 4
-    FONCTION        shift and go to state 5
-    NAME            shift and go to state 6
-    PRINTSTR        shift and go to state 7
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    FOR             shift and go to state 10
+    RPAREN          reduce using rule 34 (expression -> expression SUPTO expression .)
+    SAME            reduce using rule 34 (expression -> expression SUPTO expression .)
+    AND             reduce using rule 34 (expression -> expression SUPTO expression .)
+    OR              reduce using rule 34 (expression -> expression SUPTO expression .)
+    INFTO           reduce using rule 34 (expression -> expression SUPTO expression .)
+    SUPTO           reduce using rule 34 (expression -> expression SUPTO expression .)
+    SEMICOLON       reduce using rule 34 (expression -> expression SUPTO expression .)
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
 
-    statement                      shift and go to state 11
+  ! PLUS            [ reduce using rule 34 (expression -> expression SUPTO expression .) ]
+  ! TIMES           [ reduce using rule 34 (expression -> expression SUPTO expression .) ]
+  ! MINUS           [ reduce using rule 34 (expression -> expression SUPTO expression .) ]
+  ! DIVIDE          [ reduce using rule 34 (expression -> expression SUPTO expression .) ]
+  ! SAME            [ shift and go to state 45 ]
+  ! AND             [ shift and go to state 48 ]
+  ! OR              [ shift and go to state 49 ]
+  ! INFTO           [ shift and go to state 50 ]
+  ! SUPTO           [ shift and go to state 51 ]
+
 
 state 72
 
-    (11) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON . statement RPAREN LACOL BLOC RACOL
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (9) statement -> FONCTION NAME LPAREN RPAREN LACOL . BLOC RACOL
+    (2) BLOC -> . BLOC statement SEMICOLON
+    (3) BLOC -> . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
 
     PRINT           shift and go to state 4
     FONCTION        shift and go to state 5
@@ -1567,71 +1478,48 @@ state 72
     IF              shift and go to state 9
     FOR             shift and go to state 10
 
-    statement                      shift and go to state 76
+    BLOC                           shift and go to state 79
+    statement                      shift and go to state 3
 
 state 73
 
-    (5) statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL .
-
-    SEMICOLON       reduce using rule 5 (statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL .)
-    RPAREN          reduce using rule 5 (statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL .)
-
-
-state 74
-
-    (8) statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL .
-
-    SEMICOLON       reduce using rule 8 (statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL .)
-    RPAREN          reduce using rule 8 (statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL .)
-
-
-state 75
-
-    (9) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .
-    (10) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL . ELSE LACOL BLOC RACOL
-
-    SEMICOLON       reduce using rule 9 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .)
-    RPAREN          reduce using rule 9 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .)
-    ELSE            shift and go to state 77
-
-
-state 76
-
-    (11) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement . RPAREN LACOL BLOC RACOL
-
-    RPAREN          shift and go to state 78
-
-
-state 77
-
-    (10) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE . LACOL BLOC RACOL
-
-    LACOL           shift and go to state 79
-
-
-state 78
-
-    (11) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN . LACOL BLOC RACOL
+    (10) statement -> FONCTION NAME LPAREN PARAM RPAREN . LACOL BLOC RACOL
 
     LACOL           shift and go to state 80
 
 
-state 79
+state 74
 
-    (10) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL . BLOC RACOL
+    (4) PARAM -> NAME COMMA PARAM .
+
+    RPAREN          reduce using rule 4 (PARAM -> NAME COMMA PARAM .)
+
+
+state 75
+
+    (5) PARAM -> NUMBER COMMA PARAM .
+
+    RPAREN          reduce using rule 5 (PARAM -> NUMBER COMMA PARAM .)
+
+
+state 76
+
+    (14) statement -> WHILE LPAREN expression RPAREN LACOL . BLOC RACOL
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
 
     PRINT           shift and go to state 4
     FONCTION        shift and go to state 5
@@ -1644,22 +1532,25 @@ state 79
     BLOC                           shift and go to state 81
     statement                      shift and go to state 3
 
-state 80
+state 77
 
-    (11) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL . BLOC RACOL
+    (15) statement -> IF LPAREN expression RPAREN LACOL . BLOC RACOL
+    (16) statement -> IF LPAREN expression RPAREN LACOL . BLOC RACOL ELSE LACOL BLOC RACOL
     (2) BLOC -> . BLOC statement SEMICOLON
     (3) BLOC -> . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
 
     PRINT           shift and go to state 4
     FONCTION        shift and go to state 5
@@ -1669,51 +1560,51 @@ state 80
     IF              shift and go to state 9
     FOR             shift and go to state 10
 
-    statement                      shift and go to state 3
     BLOC                           shift and go to state 82
+    statement                      shift and go to state 3
 
-state 81
+state 78
 
-    (10) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC . RACOL
+    (17) statement -> FOR LPAREN statement SEMICOLON expression . SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (21) expression -> expression . PLUS expression
+    (22) expression -> expression . TIMES expression
+    (23) expression -> expression . SAME expression
+    (24) expression -> expression . MINUS expression
+    (25) expression -> expression . DIVIDE expression
+    (31) expression -> expression . AND expression
+    (32) expression -> expression . OR expression
+    (33) expression -> expression . INFTO expression
+    (34) expression -> expression . SUPTO expression
+
+    SEMICOLON       shift and go to state 83
+    PLUS            shift and go to state 43
+    TIMES           shift and go to state 44
+    SAME            shift and go to state 45
+    MINUS           shift and go to state 46
+    DIVIDE          shift and go to state 47
+    AND             shift and go to state 48
+    OR              shift and go to state 49
+    INFTO           shift and go to state 50
+    SUPTO           shift and go to state 51
+
+
+state 79
+
+    (9) statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC . RACOL
     (2) BLOC -> BLOC . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
-
-    RACOL           shift and go to state 83
-    PRINT           shift and go to state 4
-    FONCTION        shift and go to state 5
-    NAME            shift and go to state 6
-    PRINTSTR        shift and go to state 7
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    FOR             shift and go to state 10
-
-    statement                      shift and go to state 11
-
-state 82
-
-    (11) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC . RACOL
-    (2) BLOC -> BLOC . statement SEMICOLON
-    (4) statement -> . PRINT LPAREN expression RPAREN
-    (5) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
-    (6) statement -> . NAME LPAREN RPAREN
-    (7) statement -> . PRINTSTR LPAREN STR RPAREN
-    (8) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
-    (9) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
-    (10) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
-    (11) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
-    (12) statement -> . NAME AFFECT expression
-    (13) statement -> . NAME PLUS PLUS
-    (14) statement -> . NAME PLUS AFFECT expression
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
 
     RACOL           shift and go to state 84
     PRINT           shift and go to state 4
@@ -1726,30 +1617,348 @@ state 82
 
     statement                      shift and go to state 11
 
+state 80
+
+    (10) statement -> FONCTION NAME LPAREN PARAM RPAREN LACOL . BLOC RACOL
+    (2) BLOC -> . BLOC statement SEMICOLON
+    (3) BLOC -> . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
+
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
+
+    BLOC                           shift and go to state 85
+    statement                      shift and go to state 3
+
+state 81
+
+    (14) statement -> WHILE LPAREN expression RPAREN LACOL BLOC . RACOL
+    (2) BLOC -> BLOC . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
+
+    RACOL           shift and go to state 86
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
+
+    statement                      shift and go to state 11
+
+state 82
+
+    (15) statement -> IF LPAREN expression RPAREN LACOL BLOC . RACOL
+    (16) statement -> IF LPAREN expression RPAREN LACOL BLOC . RACOL ELSE LACOL BLOC RACOL
+    (2) BLOC -> BLOC . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
+
+    RACOL           shift and go to state 87
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
+
+    statement                      shift and go to state 11
+
 state 83
 
-    (10) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL .
+    (17) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON . statement RPAREN LACOL BLOC RACOL
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
 
-    SEMICOLON       reduce using rule 10 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL .)
-    RPAREN          reduce using rule 10 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL .)
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
 
+    statement                      shift and go to state 88
 
 state 84
 
-    (11) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL .
+    (9) statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL .
 
-    SEMICOLON       reduce using rule 11 (statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL .)
-    RPAREN          reduce using rule 11 (statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL .)
+    SEMICOLON       reduce using rule 9 (statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL .)
+    RPAREN          reduce using rule 9 (statement -> FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL .)
+
+
+state 85
+
+    (10) statement -> FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC . RACOL
+    (2) BLOC -> BLOC . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
+
+    RACOL           shift and go to state 89
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
+
+    statement                      shift and go to state 11
+
+state 86
+
+    (14) statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL .
+
+    SEMICOLON       reduce using rule 14 (statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL .)
+    RPAREN          reduce using rule 14 (statement -> WHILE LPAREN expression RPAREN LACOL BLOC RACOL .)
+
+
+state 87
+
+    (15) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .
+    (16) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL . ELSE LACOL BLOC RACOL
+
+    SEMICOLON       reduce using rule 15 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .)
+    RPAREN          reduce using rule 15 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL .)
+    ELSE            shift and go to state 90
+
+
+state 88
+
+    (17) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement . RPAREN LACOL BLOC RACOL
+
+    RPAREN          shift and go to state 91
+
+
+state 89
+
+    (10) statement -> FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL .
+
+    SEMICOLON       reduce using rule 10 (statement -> FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL .)
+    RPAREN          reduce using rule 10 (statement -> FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL .)
+
+
+state 90
+
+    (16) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE . LACOL BLOC RACOL
+
+    LACOL           shift and go to state 92
+
+
+state 91
+
+    (17) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN . LACOL BLOC RACOL
+
+    LACOL           shift and go to state 93
+
+
+state 92
+
+    (16) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL . BLOC RACOL
+    (2) BLOC -> . BLOC statement SEMICOLON
+    (3) BLOC -> . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
+
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
+
+    BLOC                           shift and go to state 94
+    statement                      shift and go to state 3
+
+state 93
+
+    (17) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL . BLOC RACOL
+    (2) BLOC -> . BLOC statement SEMICOLON
+    (3) BLOC -> . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
+
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
+
+    statement                      shift and go to state 3
+    BLOC                           shift and go to state 95
+
+state 94
+
+    (16) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC . RACOL
+    (2) BLOC -> BLOC . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
+
+    RACOL           shift and go to state 96
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
+
+    statement                      shift and go to state 11
+
+state 95
+
+    (17) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC . RACOL
+    (2) BLOC -> BLOC . statement SEMICOLON
+    (8) statement -> . PRINT LPAREN expression RPAREN
+    (9) statement -> . FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+    (10) statement -> . FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL
+    (11) statement -> . NAME LPAREN RPAREN
+    (12) statement -> . NAME LPAREN PARAM RPAREN
+    (13) statement -> . PRINTSTR LPAREN STR RPAREN
+    (14) statement -> . WHILE LPAREN expression RPAREN LACOL BLOC RACOL
+    (15) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL
+    (16) statement -> . IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL
+    (17) statement -> . FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL
+    (18) statement -> . NAME AFFECT expression
+    (19) statement -> . NAME PLUS PLUS
+    (20) statement -> . NAME PLUS AFFECT expression
+
+    RACOL           shift and go to state 97
+    PRINT           shift and go to state 4
+    FONCTION        shift and go to state 5
+    NAME            shift and go to state 6
+    PRINTSTR        shift and go to state 7
+    WHILE           shift and go to state 8
+    IF              shift and go to state 9
+    FOR             shift and go to state 10
+
+    statement                      shift and go to state 11
+
+state 96
+
+    (16) statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL .
+
+    SEMICOLON       reduce using rule 16 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL .)
+    RPAREN          reduce using rule 16 (statement -> IF LPAREN expression RPAREN LACOL BLOC RACOL ELSE LACOL BLOC RACOL .)
+
+
+state 97
+
+    (17) statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL .
+
+    SEMICOLON       reduce using rule 17 (statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL .)
+    RPAREN          reduce using rule 17 (statement -> FOR LPAREN statement SEMICOLON expression SEMICOLON statement RPAREN LACOL BLOC RACOL .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for PLUS in state 58 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 58 resolved as shift
-WARNING: shift/reduce conflict for SAME in state 58 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 58 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 58 resolved as shift
-WARNING: shift/reduce conflict for AND in state 58 resolved as shift
-WARNING: shift/reduce conflict for OR in state 58 resolved as shift
-WARNING: shift/reduce conflict for INFTO in state 58 resolved as shift
-WARNING: shift/reduce conflict for SUPTO in state 58 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 65 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 65 resolved as shift
+WARNING: shift/reduce conflict for SAME in state 65 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 65 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 65 resolved as shift
+WARNING: shift/reduce conflict for AND in state 65 resolved as shift
+WARNING: shift/reduce conflict for OR in state 65 resolved as shift
+WARNING: shift/reduce conflict for INFTO in state 65 resolved as shift
+WARNING: shift/reduce conflict for SUPTO in state 65 resolved as shift
