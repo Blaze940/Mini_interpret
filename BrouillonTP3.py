@@ -19,7 +19,7 @@ reserved = {
 tokens = [
     'NUMBER','MINUS',
     'PLUS','TIMES','DIVIDE',
-    'LPAREN','RPAREN', 'AND', 'OR','TRUE','FALSE', 'SEMICOLON','NAME','AFFECT', 'INFTO', 'SUPTO','SAME','LACOL','RACOL','STR'
+    'LPAREN','RPAREN', 'AND', 'OR','TRUE','FALSE', 'SEMICOLON','NAME','AFFECT', 'INFTO', 'SUPTO','SAME','LACOL','RACOL','STR','COMMA'
     ] + list(reserved.values())
 # Tokens (ce qui est marqué sur la console )
 t_SEMICOLON = r'\;'
@@ -39,9 +39,11 @@ t_SUPTO   = r'\>'
 t_SAME    = r'=='
 t_LACOL   = r'\{'
 t_RACOL   = r'\}'
+t_COMMA   = r','
 # t_DBQUOTE = r'\"'
 names = {} #Stocke le nom des variables et a pour clefs, les valeurs des vriables
 functions = {} #Stocke le nom des functions , et a pour valeur, le tuple des parametres et le corps de la fonction
+parameters = {}
 
 def t_NAME(t):
     r'_[a-zA-Z_0-9]+ | [a-zA-Z][a-zA-Z_0-9]*'
@@ -53,7 +55,6 @@ def t_STR(t):
     t.type = reserved.get(t.value,'STR')
     return t
 
-"toto"
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
@@ -97,18 +98,36 @@ def p_bloc(p):
     else:
         p[0] = ('bloc',p[1], 'empty')
 
+def p_param(p) :
+    ''' PARAM :   NAME COMMA PARAM
+                | NUMBER COMMA PARAM
+                | NAME
+                | NUMBER '''
+    p[0] = [p[1]]
+    if len(p) == 4 :
+        p[0] += p[3]
+
 def p_statement_print(p):
     'statement : PRINT LPAREN expression RPAREN '
     p[0] = ('print', p[3])
 
-def p_statement_fonction_void_spm(p):
-    'statement : FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL'
-    p[0] = ('function','empty',p[2], p[6])
+def p_statement_fonction_void(p):
+    '''statement : FONCTION NAME LPAREN RPAREN LACOL BLOC RACOL
+                | FONCTION NAME LPAREN PARAM RPAREN LACOL BLOC RACOL'''
+    if len(p) == 8:
+        p[0] = ('function',p[2],'empty', p[6])
+    elif len(p) == 9 :
+        p[0] = ('function',p[2],p[4],p[7]) #p[4] stocke les parametres
+
     #A refaire
 
-def p_statement_Call_fonction_void_spm(p):
-    'statement : NAME LPAREN RPAREN'
-    p[0] = ('call',p[1])
+def p_statement_Call_fonction_void(p):
+    '''statement : NAME LPAREN RPAREN
+                | NAME LPAREN PARAM RPAREN '''
+    if len(p) == 4 :
+        p[0] = ('call',p[1])
+    else :
+        p[0] = ('call', p[1],p[3])
 
 def p_statement_printString(p):
     'statement : PRINTSTR LPAREN STR RPAREN '
@@ -232,11 +251,28 @@ def evalInst(t) :
     elif t[0] == 'bloc':
         evalInst(t[1])
         evalInst(t[2])
+
     elif t[0] == 'function':
-        functions[t[2]] = t[3]
+        functions[t[1]] = (t[2],t[3]) #tuple des (parametres, corps de fonction)
     elif t[0] == 'call':
-        f = functions[t[1]]
-        evalInst(f)
+        fname = t[1] #Nom de la fonction
+        f = functions[fname] #f stocke param et son corps
+        p_default = functions[fname][0] #Parametres de la fonction par default
+        fc = f[1] #Corps
+
+        if len(t) == 3 :
+            fp = t[2] #Parametres en envoi
+        else :
+            fp = 'empty'
+
+        if len(fp) == len(p_default) : # Si paramètres egaux
+            print("PARAMETRAGE reussi")
+            for p1,p2 in zip(p_default,fp) :
+                names[p1] = p2
+            evalInst(fc)
+        else :
+            print("Erreur parametres")
+
     elif t[0] == 'assign':
         names[t[1]] = eval(t[2])
     elif t[0] == 'incr':
@@ -271,7 +307,7 @@ yacc.yacc()
 # s = 'f0 = 0; f1 = 1 ; i = 0 ; while(i<10){ fs = f0+f1 ; print(fs) ; f0 = f1 ; f1 = fs; i = i+1 ; } ;' #FIBONACCI
 # s = ' if(1){ print(10) ; printString("Mr BAUDOIN") ;};' #IF + printString
 # s = input('calc > ')
-s = 'fonction test(){print(1+1); printString("Reussi");}; test();'
+s = 'fonction test(abou,yacine,toto){print(1+1); printString("Reussi"); print(abou);}; test(5,nordine,baudoin);'
 #s = 'fonction test(){print(1+1); printString("Reussi");}; test(); fonction poutine(){printString("Explosion");}; poutine() ;'
 
 #BONUS
